@@ -1,20 +1,22 @@
-# 使用官方的 OpenJDK 作為基礎映像
-FROM openjdk:21-jdk-slim AS build
+# 使用 Gradle 官方映像作為構建基礎
+FROM gradle:7.6-jdk21 AS build
 
 # 設定工作目錄
 WORKDIR /app
 
-# 複製 Gradle 配置檔案
+# 複製所有必要文件
 COPY build.gradle settings.gradle ./
-COPY gradle gradle
+COPY gradle gradle/
+COPY src src/
+COPY gradlew ./
 
-# 複製源代碼
-COPY src src
+# 確保 gradlew 是可執行的
+RUN chmod +x gradlew
 
 # 建構專案
 RUN ./gradlew build --no-daemon
 
-# 使用一個較小的 JRE 映像來運行應用
+# 使用較小的 JRE 映像來運行應用
 FROM openjdk:21-jdk-slim
 
 # 設定工作目錄
