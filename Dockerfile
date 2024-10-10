@@ -13,6 +13,9 @@ COPY gradlew ./
 # 確保 gradlew 是可執行的
 RUN chmod +x gradlew
 
+# 確保本地安裝的 Gradle 能夠正常工作
+RUN ./gradlew --version
+
 # 建構專案
 RUN ./gradlew build --no-daemon
 
