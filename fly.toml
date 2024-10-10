@@ -1,0 +1,14 @@
+app = "your-app-name"
+
+[[services]]
+http_checks = []
+internal_port = 8080
+protocol = "tcp"
+
+[[services.ports]]
+handlers = ["http"]
+port = 80
+
+[[services.ports]]
+handlers = ["tls", "http"]
+port = 443

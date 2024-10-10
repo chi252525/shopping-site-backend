@@ -1,0 +1,20 @@
+{
+  "version": 0.1,
+  "services": [
+    {
+      "http_checks": [],
+      "internal_port": 8080,
+      "protocol": "tcp",
+      "ports": [
+        {
+          "handlers": ["http"],
+          "port": 80
+        },
+        {
+          "handlers": ["tls", "http"],
+          "port": 443
+        }
+      ]
+    }
+  ]
+}
