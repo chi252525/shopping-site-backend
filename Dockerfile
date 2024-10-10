@@ -1,5 +1,5 @@
 # 使用官方的 OpenJDK 作為基礎映像
-FROM openjdk:21-jdk-slim AS build
+FROM openjdk:17-jdk-slim AS build
 
 # 設定工作目錄
 WORKDIR /app
@@ -15,7 +15,7 @@ COPY src src
 RUN ./gradlew build --no-daemon
 
 # 使用一個較小的 JRE 映像來運行應用
-FROM openjdk:21-jre-slim
+FROM openjdk:17-jre-slim
 
 # 設定工作目錄
 WORKDIR /app
