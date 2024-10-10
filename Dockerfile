@@ -17,7 +17,7 @@ RUN chmod +x gradlew
 RUN ./gradlew build --no-daemon
 
 # 使用較小的 JRE 映像來運行應用
-FROM openjdk:17-jre-slim
+FROM openjdk:17-jdk-slim
 
 # 設定工作目錄
 WORKDIR /app
