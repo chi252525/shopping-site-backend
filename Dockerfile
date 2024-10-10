@@ -1,5 +1,5 @@
 # 使用 Gradle 官方映像作為構建基礎
-FROM gradle:7.6-jdk21 AS build
+FROM gradle:7.6-jdk17 AS build
 
 # 設定工作目錄
 WORKDIR /app
@@ -17,7 +17,7 @@ RUN chmod +x gradlew
 RUN ./gradlew build --no-daemon
 
 # 使用較小的 JRE 映像來運行應用
-FROM openjdk:21-jdk-slim
+FROM openjdk:17-jre-slim
 
 # 設定工作目錄
 WORKDIR /app
