@@ -32,3 +32,10 @@ primary_region = 'hkg'
   memory = '1gb'
   cpu_kind = 'shared'
   cpus = 1
+
+[env]
+SUPABASE_URL = "https://cmshrobcnfymbtafeicp.supabase.co"
+SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNtc2hyb2JjbmZ5bWJ0YWZlaWNwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mjk2NTI2NTAsImV4cCI6MjA0NTIyODY1MH0.ZAhCnijE6pfewnFfQW9RNwfWvdP_TcO1OrLPv4o220s"
+
+
+
