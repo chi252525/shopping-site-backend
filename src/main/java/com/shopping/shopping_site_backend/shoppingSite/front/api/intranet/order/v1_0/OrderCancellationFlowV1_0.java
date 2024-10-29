@@ -10,13 +10,9 @@ import org.springframework.stereotype.Service;
 @Slf4j
 @RequiredArgsConstructor
 @Service
-public class OrderTransactionFlowV1_0 {
+public class OrderCancellationFlowV1_0 {
     private final PaymentGateway paymentGateway;
     public OrderTransactionResponseV1_0 execute(@Valid OrderTransactionResponseV1_0 request) {
-
-        //gateWay串交易
-
-        //UseCase 回給member
 
         return new OrderTransactionResponseV1_0();
     }
