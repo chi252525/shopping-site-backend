@@ -1,5 +1,6 @@
 package com.shopping.shopping_site_backend.infra.sys.spring.service;
 
+import com.shopping.shopping_site_backend.infra.dataprovider.entity.member.GoogleUser;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -16,18 +17,22 @@ public class JwtService {
     private final String SECRET_KEY = "l1XuWqVTJ4/TGPto7XRsH1wV4Lc7JohMC0iojc/t8IY="; // 替換為安全的密鑰
     private final long EXPIRATION_TIME = 1000 * 60 * 60; // 1 小時
 
-    public String generateToken(Authentication authentication) {
-        String username = authentication.getName();
-
+    public String generateToken(GoogleUser user) {
         Map<String, Object> claims = new HashMap<>();
-        claims.put("roles", authentication.getAuthorities());
+        claims.put("email", user.getEmail());
+        claims.put("name", user.getName());
+        claims.put("id", user.getId());
 
+        return createToken(claims, user.getEmail());
+    }
+
+    private String createToken(Map<String, Object> claims, String subject) {
         return Jwts.builder()
                 .setClaims(claims)
-                .setSubject(username)
+                .setSubject(subject)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
-                .signWith(SignatureAlgorithm.HS512, SECRET_KEY)
+                .signWith(SignatureAlgorithm.HS256, SECRET_KEY)
                 .compact();
     }
 
