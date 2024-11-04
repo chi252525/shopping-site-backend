@@ -16,7 +16,6 @@ import org.hibernate.annotations.DynamicUpdate;
 @NoArgsConstructor
 @DynamicUpdate
 @Entity
-@Table(name = "User")
 public class GoogleUser extends BaseEntity {
     @Id
     @Column(columnDefinition = "VARCHAR(128)", nullable = false, updatable = false)
