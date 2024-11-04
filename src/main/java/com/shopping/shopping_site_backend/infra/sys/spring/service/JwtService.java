@@ -1,6 +1,6 @@
 package com.shopping.shopping_site_backend.infra.sys.spring.service;
 
-import com.shopping.shopping_site_backend.infra.dataprovider.entity.member.GoogleUser;
+import com.shopping.shopping_site_backend.infra.dataprovider.entity.shopper.GoogleUser;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;

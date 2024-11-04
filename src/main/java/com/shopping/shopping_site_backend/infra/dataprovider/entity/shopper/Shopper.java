@@ -1,15 +1,15 @@
-package com.shopping.shopping_site_backend.infra.dataprovider.entity.member;
+package com.shopping.shopping_site_backend.infra.dataprovider.entity.shopper;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.shopping.shopping_site_backend.infra.constant.DateTimeConstant;
-import com.shopping.shopping_site_backend.infra.sys.spring.entity.BaseEntity;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+
+import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+
 import lombok.*;
 import org.hibernate.annotations.DynamicUpdate;
+import org.springframework.data.annotation.Id;
 
 /** 會員資料檔 */
 @Getter
@@ -19,12 +19,13 @@ import org.hibernate.annotations.DynamicUpdate;
 @NoArgsConstructor
 @DynamicUpdate
 @Entity
-public class Shopper extends BaseEntity {
+@Table(name = "ec_shopper")
+public class Shopper {
 
   /** 唯一序號 */
   @Id
-  @Column(columnDefinition = "VARCHAR(128)", nullable = false, updatable = false)
-  private String id;
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
 
   /** 身分證 ID */
   @Column(name = "IDNo", columnDefinition = "VARCHAR(16)", nullable = false)

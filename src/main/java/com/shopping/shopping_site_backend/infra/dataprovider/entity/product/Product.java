@@ -1,13 +1,15 @@
 package com.shopping.shopping_site_backend.infra.dataprovider.entity.product;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import javax.persistence.Entity;
 import java.time.LocalDateTime;
+import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
+import javax.persistence.Table;
+
 import lombok.*;
 import org.hibernate.annotations.DynamicUpdate;
+import org.springframework.data.annotation.Id;
 
 @Getter
 @Setter
@@ -16,6 +18,7 @@ import org.hibernate.annotations.DynamicUpdate;
 @NoArgsConstructor
 @DynamicUpdate
 @Entity
+@Table(name = "ec_product")
 public class Product {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)

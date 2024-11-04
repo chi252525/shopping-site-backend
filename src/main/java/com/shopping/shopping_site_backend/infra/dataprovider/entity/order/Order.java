@@ -1,10 +1,12 @@
 package com.shopping.shopping_site_backend.infra.dataprovider.entity.order;
 
-import jakarta.persistence.Entity;
+import javax.persistence.Entity;
 import java.time.LocalDateTime;
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
+import javax.persistence.Table;
+
 import lombok.*;
 import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.data.annotation.Id;
@@ -16,6 +18,7 @@ import org.springframework.data.annotation.Id;
 @NoArgsConstructor
 @DynamicUpdate
 @Entity
+@Table(name = "ec_order")
 public class Order {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)

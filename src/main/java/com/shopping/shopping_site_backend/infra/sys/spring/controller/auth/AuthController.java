@@ -1,6 +1,6 @@
 package com.shopping.shopping_site_backend.infra.sys.spring.controller.auth;
 
-import com.shopping.shopping_site_backend.infra.dataprovider.entity.member.GoogleUser;
+import com.shopping.shopping_site_backend.infra.dataprovider.entity.shopper.GoogleUser;
 import com.shopping.shopping_site_backend.infra.sys.spring.service.GoogleService;
 import com.shopping.shopping_site_backend.infra.sys.spring.service.JwtService;
 import java.net.URI;

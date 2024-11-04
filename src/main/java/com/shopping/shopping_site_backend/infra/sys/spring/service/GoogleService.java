@@ -1,8 +1,8 @@
 package com.shopping.shopping_site_backend.infra.sys.spring.service;
 
-import com.shopping.shopping_site_backend.infra.dataprovider.entity.member.GoogleUser;
-import com.shopping.shopping_site_backend.infra.dataprovider.entity.member.Shopper;
-import com.shopping.shopping_site_backend.infra.sys.spring.repository.MemberRepository;
+import com.shopping.shopping_site_backend.infra.dataprovider.entity.shopper.GoogleUser;
+import com.shopping.shopping_site_backend.infra.dataprovider.entity.shopper.Shopper;
+import com.shopping.shopping_site_backend.infra.sys.spring.repository.ShopperRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
@@ -25,12 +25,12 @@ public class GoogleService {
   private String redirectUri;
 
   private final RestTemplate restTemplate;
-  private final MemberRepository memberRepository;
+  private final ShopperRepository shopperRepository;
 
   @Autowired
-  public GoogleService(RestTemplate restTemplate, MemberRepository memberRepository) {
+  public GoogleService(RestTemplate restTemplate, ShopperRepository shopperRepository) {
     this.restTemplate = restTemplate;
-    this.memberRepository = memberRepository;
+    this.shopperRepository = shopperRepository;
   }
 
   public GoogleUser getUserInfo(String code) {
@@ -87,7 +87,7 @@ public class GoogleService {
   }
 
   public GoogleUser getUserByEmail(String email) {
-    Shopper user = memberRepository.findByEmail(email); // 假設有這個方法
+    Shopper user = shopperRepository.findByEmail(email); // 假設有這個方法
 
     if (user != null) {
       return new GoogleUser(user.getId(), user.getName(), user.getEmail());

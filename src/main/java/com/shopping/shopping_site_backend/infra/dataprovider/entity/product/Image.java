@@ -1,12 +1,18 @@
 package com.shopping.shopping_site_backend.infra.dataprovider.entity.product;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import org.springframework.data.annotation.Id;
+import javax.persistence.*;
 
+import lombok.*;
+import org.hibernate.annotations.DynamicUpdate;
+import org.springframework.data.annotation.Id;
+@Getter
+@Setter
+@ToString
+@AllArgsConstructor
+@NoArgsConstructor
+@DynamicUpdate
 @Entity
+@Table(name = "ec_image")
 public class Image {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)

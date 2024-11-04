@@ -1,6 +1,6 @@
 package com.shopping.shopping_site_backend.infra.sys.spring.service;
 
-import com.shopping.shopping_site_backend.infra.dataprovider.entity.member.GoogleUser;
+import com.shopping.shopping_site_backend.infra.dataprovider.entity.shopper.GoogleUser;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
