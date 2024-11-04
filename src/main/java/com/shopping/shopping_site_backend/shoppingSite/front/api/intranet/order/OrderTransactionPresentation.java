@@ -5,17 +5,15 @@ import com.shopping.shopping_site_backend.shoppingSite.front.controller.intranet
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Service;
 
-
-
 @Service
 public class OrderTransactionPresentation {
-    private final OrderTransactionFlowV1_0 orderTransactionFlowV1_0;
+  private final OrderTransactionFlowV1_0 orderTransactionFlowV1_0;
 
-    public OrderTransactionPresentation(OrderTransactionFlowV1_0 orderTransactionFlowV1) {
-        orderTransactionFlowV1_0 = orderTransactionFlowV1;
-    }
+  public OrderTransactionPresentation(OrderTransactionFlowV1_0 orderTransactionFlowV1) {
+    orderTransactionFlowV1_0 = orderTransactionFlowV1;
+  }
 
-    public OrderTransactionResponseV1_0 presentV1_0(@Valid OrderTransactionResponseV1_0 request)  {
-        return this.orderTransactionFlowV1_0.execute(request);
-    }
+  public OrderTransactionResponseV1_0 presentV1_0(@Valid OrderTransactionResponseV1_0 request) {
+    return this.orderTransactionFlowV1_0.execute(request);
+  }
 }

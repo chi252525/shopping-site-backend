@@ -4,9 +4,9 @@ import lombok.Data;
 
 @Data
 public class TokenResponse {
-    private String accessToken;
-    private String refreshToken;
-    private String scope;
-    private String tokenType;
-    private int expiresIn;
+  private String accessToken;
+  private String refreshToken;
+  private String scope;
+  private String tokenType;
+  private int expiresIn;
 }

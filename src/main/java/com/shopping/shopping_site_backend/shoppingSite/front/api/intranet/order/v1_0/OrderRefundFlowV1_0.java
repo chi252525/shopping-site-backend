@@ -11,11 +11,10 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 @Service
 public class OrderRefundFlowV1_0 {
-    private final PaymentGateway paymentGateway;
-    public OrderTransactionResponseV1_0 execute(@Valid OrderTransactionResponseV1_0 request) {
+  private final PaymentGateway paymentGateway;
 
+  public OrderTransactionResponseV1_0 execute(@Valid OrderTransactionResponseV1_0 request) {
 
-
-        return new OrderTransactionResponseV1_0();
-    }
+    return new OrderTransactionResponseV1_0();
+  }
 }

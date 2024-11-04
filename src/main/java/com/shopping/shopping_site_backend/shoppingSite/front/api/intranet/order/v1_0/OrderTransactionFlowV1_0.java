@@ -11,13 +11,14 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 @Service
 public class OrderTransactionFlowV1_0 {
-    private final PaymentGateway paymentGateway;
-    public OrderTransactionResponseV1_0 execute(@Valid OrderTransactionResponseV1_0 request) {
+  private final PaymentGateway paymentGateway;
 
-        //gateWay串交易
+  public OrderTransactionResponseV1_0 execute(@Valid OrderTransactionResponseV1_0 request) {
 
-        //UseCase 回給member
+    // gateWay串交易
 
-        return new OrderTransactionResponseV1_0();
-    }
+    // UseCase 回給member
+
+    return new OrderTransactionResponseV1_0();
+  }
 }

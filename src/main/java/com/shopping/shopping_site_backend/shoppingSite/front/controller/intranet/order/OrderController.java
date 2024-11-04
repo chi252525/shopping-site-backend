@@ -12,22 +12,20 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-
 @Tag(name = "下單")
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("${intranet}/order/v1.0")
 public class OrderController {
-    private final OrderTransactionPresentation orderTransactionPresentation;
+  private final OrderTransactionPresentation orderTransactionPresentation;
 
-    @Operation(
-            tags = {"下單"},
-            summary = "下單v1.0",
-            description = "下單")
-    @PostMapping("/orderTransaction")
-    public OrderTransactionResponseV1_0 orderTransaction(
-            @Parameter(required = true) @Valid @RequestBody OrderTransactionResponseV1_0 request)
-            {
-        return this.orderTransactionPresentation.presentV1_0(request);
-    }
+  @Operation(
+      tags = {"下單"},
+      summary = "下單v1.0",
+      description = "下單")
+  @PostMapping("/orderTransaction")
+  public OrderTransactionResponseV1_0 orderTransaction(
+      @Parameter(required = true) @Valid @RequestBody OrderTransactionResponseV1_0 request) {
+    return this.orderTransactionPresentation.presentV1_0(request);
+  }
 }
