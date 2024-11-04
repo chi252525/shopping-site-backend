@@ -1,7 +1,6 @@
 package com.shopping.shopping_site_backend.infra.sys.spring.service;
-
-import com.shopping.shopping_site_backend.infra.dataprovider.entity.member.Member;
 import com.shopping.shopping_site_backend.infra.dataprovider.entity.member.GoogleUser;
+import com.shopping.shopping_site_backend.infra.dataprovider.entity.member.Shopper;
 import com.shopping.shopping_site_backend.infra.sys.spring.repository.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -85,7 +84,7 @@ public class GoogleService {
 
 
     public GoogleUser getUserByEmail(String email) {
-        Member user = memberRepository.findByEmail(email); // 假設有這個方法
+        Shopper user = memberRepository.findByEmail(email); // 假設有這個方法
 
         if (user != null) {
             return new GoogleUser(user.getId(), user.getName(), user.getEmail());

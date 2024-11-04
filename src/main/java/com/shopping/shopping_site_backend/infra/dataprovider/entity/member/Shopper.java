@@ -6,7 +6,6 @@ import com.shopping.shopping_site_backend.infra.sys.spring.entity.BaseEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
-import jakarta.persistence.Table;
 import lombok.*;
 import org.hibernate.annotations.DynamicUpdate;
 
@@ -21,8 +20,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @DynamicUpdate
 @Entity
-@Table(name = "Member")
-public class Member extends BaseEntity {
+public class Shopper extends BaseEntity {
 
     /** 唯一序號 */
     @Id
@@ -34,8 +32,8 @@ public class Member extends BaseEntity {
     private String idNo;
 
     /** 會員狀態 */
-    @Column(columnDefinition = "VARCHAR(16)", nullable = false, updatable = false)
-    private String status;
+    @Column(columnDefinition = "boolean", nullable = false, updatable = false)
+    private boolean enabled;
 
     /** 中文姓名 */
     @Column(columnDefinition = "NVARCHAR(32)")
