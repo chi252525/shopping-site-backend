@@ -4,5 +4,5 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 @RequiredArgsConstructor
-@Component("ap6.forex.ap1.Common.TransferForAddress")
+@Component
 public class PaymentGateway {}
