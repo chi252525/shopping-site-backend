@@ -40,7 +40,7 @@ public class Order {
   private String status = "Shipping Complete"; // 状态，默认值为 'Shipping Complete'
 
   @Column(name = "shopperType", nullable = false)
-  private String shopperType = "Shoppee"; // 购物者类型，默认值为 'Shoppee'
+  private String shopperType;
 
   @Column(name = "shopperName", nullable = false)
   private String shopperName; // 购物者姓名
