@@ -1,31 +1,113 @@
-CREATE TABLE ec_order (
-    id SERIAL PRIMARY KEY,  -- 自动递增的 ID
-    indicationOrderNumber VARCHAR(255) NOT NULL,  -- 订单编号，字符串类型
-    orderDate TIMESTAMP NOT NULL,  -- 订单日期，日期时间类型
-    paymentDate TIMESTAMP,  -- 支付日期，日期时间类型
-    paymentType VARCHAR(100),  -- 支付类型，字符串类型
-    status VARCHAR(50) DEFAULT 'Shipping Complete',  -- 状态，字符串类型，默认值为 'Shipping Complete'
-    shopperType VARCHAR(50) DEFAULT 'Shoppee',  -- 购物者类型，字符串类型，默认值为 'Shoppee'
-    shopperName VARCHAR(255) NOT NULL,  -- 购物者姓名，字符串类型
-    shopperPaidAmount DOUBLE PRECISION NOT NULL,  -- 购物者支付金额，双精度浮点数
-    discountTotal DOUBLE PRECISION DEFAULT 0.0,  -- 折扣总额，双精度浮点数，默认值为 0.0
-    shopperId INT NOT NULL  -- 购物者 ID，整型
+
+-- SQL script for the ec_merchant table
+CREATE TABLE ec_merchant (
+    id BIGSERIAL PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    enabled BOOLEAN NOT NULL,
+    created_at TIMESTAMP,
+    updated_at TIMESTAMP,
+    create_user_id BIGINT,
+    update_user_id BIGINT
 );
 
-CREATE TABLE ec_product (
-    id SERIAL PRIMARY KEY,                    -- 产品 ID，自增主键
-    base_sku VARCHAR(100) NOT NULL,           -- 基本 SKU
-    name VARCHAR(255) NOT NULL,                -- 产品名称
-    unit_price DECIMAL(10, 2) NOT NULL,       -- 单位价格，包含两位小数
-    sale_price DECIMAL(10, 2),                 -- 销售价格，包含两位小数
-    discount_price DECIMAL(10, 2),             -- 折扣价格，包含两位小数
-    version_id INT NOT NULL,                   -- 版本 ID
-    unit VARCHAR(50) NOT NULL,                 -- 单位
-    in_stock BOOLEAN NOT NULL,                 -- 是否有库存
-    available_end_time TIMESTAMP,              -- 可用结束时间
-    available_start_time TIMESTAMP,            -- 可用开始时间
-    merchant_id INT NOT NULL,                   -- 商家 ID
+-- SQL script for the ec_order table
+CREATE TABLE ec_order (
+    id BIGSERIAL PRIMARY KEY,
+    indicationOrderNumber VARCHAR(255) NOT NULL,
+    orderDate TIMESTAMP NOT NULL,
+    paymentDate TIMESTAMP,
+    paymentType VARCHAR(255),
+    status VARCHAR(255) NOT NULL DEFAULT 'Shipping Complete',
+    shopperType VARCHAR(255) NOT NULL,
+    shopperName VARCHAR(255) NOT NULL,
+    shopperPaidAmount DOUBLE PRECISION NOT NULL,
+    discountTotal DOUBLE PRECISION DEFAULT 0.0,
+    shopper_id BIGINT NOT NULL,
+    created_at TIMESTAMP,
+    updated_at TIMESTAMP,
+    create_user_id BIGINT,
+    update_user_id BIGINT,
+    FOREIGN KEY (shopper_id) REFERENCES ec_shopper(id)
+);
 
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,  -- 创建时间
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP  -- 更新时间
+-- SQL script for the ec_order_item table
+CREATE TABLE ec_order_item (
+    id BIGSERIAL PRIMARY KEY,
+    order_id BIGINT NOT NULL,
+    shipping_type VARCHAR(255) NOT NULL,
+    shipping_status VARCHAR(255) NOT NULL,
+    payment_type VARCHAR(255) NOT NULL,
+    payment_status VARCHAR(255) NOT NULL,
+    sku VARCHAR(255) NOT NULL,
+    discount_price DOUBLE PRECISION NOT NULL,
+    quantity INT NOT NULL,
+    created_at TIMESTAMP,
+    updated_at TIMESTAMP,
+    create_user_id BIGINT,
+    update_user_id BIGINT,
+    FOREIGN KEY (order_id) REFERENCES ec_order(id)
+);
+
+-- SQL script for the ec_attribute table
+CREATE TABLE ec_attribute (
+    id BIGSERIAL PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    value VARCHAR(255) NOT NULL,
+    product_id BIGINT NOT NULL,
+    created_at TIMESTAMP,
+    updated_at TIMESTAMP,
+    create_user_id BIGINT,
+    update_user_id BIGINT,
+    FOREIGN KEY (product_id) REFERENCES ec_product(id)
+);
+
+-- SQL script for the ec_category table
+CREATE TABLE ec_category (
+    id BIGSERIAL PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    description TEXT,
+    created_at TIMESTAMP,
+    updated_at TIMESTAMP,
+    create_user_id BIGINT,
+    update_user_id BIGINT
+);
+
+-- SQL script for the ec_image table
+CREATE TABLE ec_image (
+    id BIGSERIAL PRIMARY KEY,
+    url VARCHAR(255) NOT NULL,
+    product_id BIGINT NOT NULL,
+    created_at TIMESTAMP,
+    updated_at TIMESTAMP,
+    create_user_id BIGINT,
+    update_user_id BIGINT,
+    FOREIGN KEY (product_id) REFERENCES ec_product(id)
+);
+
+-- SQL script for the ec_product table
+CREATE TABLE ec_product (
+    id BIGSERIAL PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    description TEXT,
+    price DOUBLE PRECISION NOT NULL,
+    category_id BIGINT NOT NULL,
+    created_at TIMESTAMP,
+    updated_at TIMESTAMP,
+    create_user_id BIGINT,
+    update_user_id BIGINT,
+    FOREIGN KEY (category_id) REFERENCES ec_category(id)
+);
+
+-- SQL script for the ec_refund_record table
+CREATE TABLE ec_refund_record (
+    id SERIAL PRIMARY KEY,
+    order_id BIGINT NOT NULL,
+    status VARCHAR(255) NOT NULL,
+    complete_time TIMESTAMP,
+    payment_type VARCHAR(255) NOT NULL,
+    created_at TIMESTAMP,
+    updated_at TIMESTAMP,
+    create_user_id BIGINT,
+    update_user_id BIGINT,
+    FOREIGN KEY (order_id) REFERENCES ec_order(id)
 );
