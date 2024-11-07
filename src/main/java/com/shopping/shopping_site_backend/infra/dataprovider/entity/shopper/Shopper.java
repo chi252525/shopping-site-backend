@@ -7,6 +7,7 @@ import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+import com.shopping.shopping_site_backend.infra.dataprovider.entity.BaseEntity;
 import lombok.*;
 import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.data.annotation.Id;
@@ -20,7 +21,7 @@ import org.springframework.data.annotation.Id;
 @DynamicUpdate
 @Entity
 @Table(name = "ec_shopper")
-public class Shopper {
+public class Shopper extends BaseEntity {
 
   /** 唯一序號 */
   @Id

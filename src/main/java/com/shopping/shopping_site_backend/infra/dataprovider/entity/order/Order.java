@@ -1,12 +1,10 @@
 package com.shopping.shopping_site_backend.infra.dataprovider.entity.order;
 
-import javax.persistence.Entity;
+import javax.persistence.*;
 import java.time.LocalDateTime;
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Table;
 
+import com.shopping.shopping_site_backend.infra.dataprovider.entity.BaseEntity;
+import com.shopping.shopping_site_backend.infra.dataprovider.entity.shopper.Shopper;
 import lombok.*;
 import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.data.annotation.Id;
@@ -19,7 +17,7 @@ import org.springframework.data.annotation.Id;
 @DynamicUpdate
 @Entity
 @Table(name = "ec_order")
-public class Order {
+public class Order extends BaseEntity {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id; // 自动递增的 ID
@@ -51,6 +49,7 @@ public class Order {
   @Column(name = "discountTotal")
   private Double discountTotal = 0.0; // 折扣总额，默认值为 0.0
 
-  @Column(name = "shopperId", nullable = false)
-  private Integer shopperId; // 购物者 ID
+  @ManyToOne
+  @JoinColumn(name = "shopper_id", nullable = false)
+  private Shopper shopper; // Associated shopper
 }

@@ -1,12 +1,9 @@
 package com.shopping.shopping_site_backend.infra.dataprovider.entity.product;
 
 
-import javax.persistence.Entity;
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Table;
+import javax.persistence.*;
 
+import com.shopping.shopping_site_backend.infra.dataprovider.entity.BaseEntity;
 import lombok.*;
 import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.data.annotation.Id;
@@ -18,7 +15,7 @@ import org.springframework.data.annotation.Id;
 @DynamicUpdate
 @Entity
 @Table(name = "ec_category")
-public class Category {
+public class Category extends BaseEntity {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id; // 分类 ID
@@ -29,9 +26,14 @@ public class Category {
   @Column(name = "name", nullable = false)
   private String name; // 分类名称
 
-  @Column(name = "parent_id")
-  private Integer parentId; // 父级分类 ID
+  @ManyToOne
+  @JoinColumn(name = "product_id", nullable = false)
+  private Product product; // 关联的产品
+  // 关联的产品 ID
 
-  @Column(name = "product_id")
-  private Integer productId; // 关联的产品 ID
+  @ManyToOne
+  @MapsId
+  @JoinColumn(name = "id")
+  private Category parentCategory; // 关联的父级分类
+
 }

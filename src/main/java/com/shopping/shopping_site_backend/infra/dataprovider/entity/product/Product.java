@@ -1,12 +1,10 @@
 package com.shopping.shopping_site_backend.infra.dataprovider.entity.product;
 
-import javax.persistence.Entity;
+import javax.persistence.*;
 import java.time.LocalDateTime;
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Table;
 
+import com.shopping.shopping_site_backend.infra.dataprovider.entity.BaseEntity;
+import com.shopping.shopping_site_backend.infra.dataprovider.entity.merchant.Merchant;
 import lombok.*;
 import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.data.annotation.Id;
@@ -19,7 +17,7 @@ import org.springframework.data.annotation.Id;
 @DynamicUpdate
 @Entity
 @Table(name = "ec_product")
-public class Product {
+public class Product extends BaseEntity {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id; // 产品 ID，自增主键
@@ -54,12 +52,9 @@ public class Product {
   @Column(name = "available_end_time")
   private LocalDateTime availableEndTime; // 可用结束时间
 
-  @Column(name = "merchant_id", nullable = false)
-  private Integer merchantId; // 商家 ID
+  @ManyToOne
+  @JoinColumn(name = "merchant_id", nullable = false)
+  private Merchant merchant; // 关联的商家
 
-  @Column(name = "created_at", updatable = false)
-  private LocalDateTime createdAt; // 创建时间
 
-  @Column(name = "updated_at")
-  private LocalDateTime updatedAt; // 更新时间
 }
