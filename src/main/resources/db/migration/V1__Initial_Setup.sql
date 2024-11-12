@@ -26,8 +26,13 @@ CREATE TABLE ec_product (
 -- 3. SQL script for the ec_shopper table (assuming this table exists based on foreign key in ec_order)
 CREATE TABLE ec_shopper (
     id BIGSERIAL PRIMARY KEY,
-    name VARCHAR(255) NOT NULL,
-    email VARCHAR(255) NOT NULL
+    IDNo VARCHAR(16) NOT NULL,
+    enabled BOOLEAN NOT NULL,
+    name VARCHAR(32),
+    email VARCHAR(32),
+    gender VARCHAR(8),
+    birth_date DATE,
+    updated_at TIMESTAMP NOT NULL
 );
 
 -- 4. SQL script for the ec_order table

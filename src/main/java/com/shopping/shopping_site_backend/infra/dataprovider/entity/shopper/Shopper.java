@@ -2,15 +2,17 @@ package com.shopping.shopping_site_backend.infra.dataprovider.entity.shopper;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.shopping.shopping_site_backend.infra.constant.DateTimeConstant;
-
-import javax.persistence.*;
+import com.shopping.shopping_site_backend.infra.dataprovider.entity.BaseEntity;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-
-import com.shopping.shopping_site_backend.infra.dataprovider.entity.BaseEntity;
 import lombok.*;
 import org.hibernate.annotations.DynamicUpdate;
-import org.springframework.data.annotation.Id;
 
 /** 會員資料檔 */
 @Getter
@@ -37,10 +39,10 @@ public class Shopper extends BaseEntity {
   private boolean enabled;
 
   /** 中文姓名 */
-  @Column(columnDefinition = "NVARCHAR(32)")
+  @Column(columnDefinition = "VARCHAR(32)")
   private String name;
 
-  @Column(columnDefinition = "NVARCHAR(32)")
+  @Column(columnDefinition = "VARCHAR(32)")
   private String email;
 
   /** 性別，英文代碼，F 為女性，M 為男性 */

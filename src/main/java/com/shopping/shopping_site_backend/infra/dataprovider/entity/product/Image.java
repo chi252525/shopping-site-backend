@@ -1,11 +1,17 @@
 package com.shopping.shopping_site_backend.infra.dataprovider.entity.product;
 
-import javax.persistence.*;
-
 import com.shopping.shopping_site_backend.infra.dataprovider.entity.BaseEntity;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 import lombok.*;
 import org.hibernate.annotations.DynamicUpdate;
-import org.springframework.data.annotation.Id;
+
 @Getter
 @Setter
 @ToString
@@ -19,9 +25,6 @@ public class Image extends BaseEntity {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id; // 图片 ID
 
-  @Column(name = "product_id", nullable = false)
-  private Integer productId; // 关联的产品 ID
-
   @Column(name = "image_url", nullable = false)
   private String imageUrl; // 图片 URL
 
@@ -31,6 +34,4 @@ public class Image extends BaseEntity {
   @ManyToOne
   @JoinColumn(name = "product_id", nullable = false)
   private Product product; // 关联的产品
-
-
 }

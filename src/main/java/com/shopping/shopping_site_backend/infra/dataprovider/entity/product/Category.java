@@ -1,12 +1,18 @@
 package com.shopping.shopping_site_backend.infra.dataprovider.entity.product;
 
-
-import javax.persistence.*;
-
 import com.shopping.shopping_site_backend.infra.dataprovider.entity.BaseEntity;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.MapsId;
+import jakarta.persistence.Table;
 import lombok.*;
 import org.hibernate.annotations.DynamicUpdate;
-import org.springframework.data.annotation.Id;
+
 @Getter
 @Setter
 @ToString
@@ -35,5 +41,4 @@ public class Category extends BaseEntity {
   @MapsId
   @JoinColumn(name = "id")
   private Category parentCategory; // 关联的父级分类
-
 }

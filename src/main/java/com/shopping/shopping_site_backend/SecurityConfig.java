@@ -19,24 +19,20 @@ public class SecurityConfig {
 
   @Bean
   public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-    http.csrf(csrf -> csrf.disable()) // 禁用 CSRF 保護（視情況而定）
-        .authorizeHttpRequests(
-            authorize ->
-                authorize
-                    .requestMatchers(
-                        "/login", "/api/oauth2/**", "/swagger-ui/**", "/v3/api-docs/**")
-                    .permitAll() // 允許訪問登錄頁面和 OAuth2 路徑
-                    .anyRequest()
-                    .authenticated() // 其他請求需身份驗證
-            )
-        .oauth2Login(
-            oauth2 ->
-                oauth2
-                    .loginPage("/oauth2/authorization/google")
-                    .successHandler(customAuthenticationSuccessHandler()) // 使用自定義的成功處理程序
-                    .failureHandler(new SimpleUrlAuthenticationFailureHandler("/login?error=true")))
-        .addFilterBefore(
-            customAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class); // 添加自定義過濾器
+    http.csrf(csrf -> csrf.disable()) // Disable CSRF protection (use carefully)
+        .authorizeHttpRequests(authorize ->
+            authorize
+                .requestMatchers("/login", "/api/oauth2/**", "/swagger-ui/**", "/v3/api-docs/**")
+                .permitAll() // Allow login page, OAuth2 paths, Swagger UI, and API docs to be accessed without authentication
+                .anyRequest().authenticated() // Other requests require authentication
+        )
+        .oauth2Login(oauth2 ->
+            oauth2
+                .loginPage("/oauth2/authorization/google")
+                .successHandler(customAuthenticationSuccessHandler()) // Custom success handler
+                .failureHandler(new SimpleUrlAuthenticationFailureHandler("/login?error=true"))
+        )
+        .addFilterBefore(customAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class); // Add custom filter
 
     return http.build();
   }
