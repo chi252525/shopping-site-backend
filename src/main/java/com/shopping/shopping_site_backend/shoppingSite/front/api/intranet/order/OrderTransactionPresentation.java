@@ -25,4 +25,8 @@ public class OrderTransactionPresentation {
   public OrderTransactionResponseV1_0 refundOrder(@Valid OrderTransactionRequestV1_0 request) {
     return null;
   }
+
+  public OrderTransactionResponseV1_0 updateOrderStatus(Long id, String status) {
+    return null;
+  }
 }

@@ -8,16 +8,19 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @Tag(name = "訂單交易")
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("${intranet}/order")
-public class OrderController {
+public class OrderTransController {
   private final OrderTransactionPresentation orderTransactionPresentation;
 
   @Operation(
@@ -49,4 +52,27 @@ public class OrderController {
       @Parameter(required = true) @Valid @RequestBody OrderTransactionRequestV1_0 request) {
     return this.orderTransactionPresentation.refundOrder(request);
   }
+
+  //更新訂單狀態（Update Order Status）
+//  方法：PUT
+////  路徑：/orders/{id}/status
+////  描述：更新訂單的狀態，常見的狀態有「待處理」、「已發貨」、「已取消」等。
+////  參數：id（訂單ID）、status（訂單狀態）
+////  返回：更新後的訂單
+  @Operation(
+      tags = {"訂單交易"},
+      summary = "更新訂單狀態",
+      description = "更新訂單狀態")
+  @PutMapping("/{id}/status")
+  public OrderTransactionResponseV1_0 updateOrderStatus(
+      @Parameter(description = "訂單ID", required = true) @PathVariable("id") Long id,
+      @Parameter(description = "訂單狀態", required = true) @RequestParam("status") String status) {
+    return this.orderTransactionPresentation.updateOrderStatus(id, status);
+  }
+
+
+
+
+
+
 }
