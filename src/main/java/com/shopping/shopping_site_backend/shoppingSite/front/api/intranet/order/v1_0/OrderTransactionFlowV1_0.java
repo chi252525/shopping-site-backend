@@ -1,6 +1,7 @@
 package com.shopping.shopping_site_backend.shoppingSite.front.api.intranet.order.v1_0;
 
-import com.shopping.shopping_site_backend.shoppingSite.front.controller.intranet.order.model.OrderTransactionResponseV1_0;
+import com.shopping.shopping_site_backend.shoppingSite.front.controller.intranet.ordertransation.model.OrderTransactionRequestV1_0;
+import com.shopping.shopping_site_backend.shoppingSite.front.controller.intranet.ordertransation.model.OrderTransactionResponseV1_0;
 import com.shopping.shopping_site_backend.shoppingSite.front.infrastructure.gateway.PaymentGateway;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -13,7 +14,7 @@ import org.springframework.stereotype.Service;
 public class OrderTransactionFlowV1_0 {
   private final PaymentGateway paymentGateway;
 
-  public OrderTransactionResponseV1_0 execute(@Valid OrderTransactionResponseV1_0 request) {
+  public OrderTransactionResponseV1_0 execute(@Valid OrderTransactionRequestV1_0 request) {
 
     // gateWay串交易
 
