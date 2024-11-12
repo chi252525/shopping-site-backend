@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -44,23 +45,32 @@ public class GoogleService {
   private String exchangeCodeForToken(String code) {
     String tokenUrl = "https://oauth2.googleapis.com/token";
 
-    // 創建請求體
-    String requestBody =
-        String.format(
-            "code=%s&client_id=%s&client_secret=%s&redirect_uri=%s&grant_type=authorization_code",
-            code, clientId, clientSecret, redirectUri);
+    // Create the request body
+    String requestBody = String.format(
+        "code=%s&client_id=%s&client_secret=%s&redirect_uri=%s&grant_type=authorization_code",
+        code, clientId, clientSecret, redirectUri);
 
-    // 發送 POST 請求
-    ResponseEntity<TokenResponse> response =
-        restTemplate.postForEntity(
-            tokenUrl, new HttpEntity<>(requestBody, createHeaders()), TokenResponse.class);
+    // Set headers for the POST request
+    HttpHeaders headers = new HttpHeaders();
+    headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
 
+    // Send POST request
+    HttpEntity<String> entity = new HttpEntity<>(requestBody, headers);
+    ResponseEntity<TokenResponse> response = restTemplate.postForEntity(
+        tokenUrl, entity, TokenResponse.class);
+
+
+
+    // Check for successful response and extract token
     if (response.getStatusCode().is2xxSuccessful() && response.getBody() != null) {
       return response.getBody().getAccessToken();
     } else {
-      throw new RuntimeException("Failed to exchange code for token");
+      String errorMessage = "Failed to exchange code for token. Status: " + response.getStatusCode() +
+          ", Response: " + response.getBody();
+      throw new RuntimeException(errorMessage);
     }
   }
+
 
   private GoogleUser fetchUserProfile(String accessToken) {
     String userInfoUrl = "https://www.googleapis.com/oauth2/v2/userinfo";

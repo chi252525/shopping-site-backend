@@ -70,6 +70,7 @@ public class AuthController {
     logger.info("Received OAuth2 callback with state: {}", state);
     // 處理 code 取得 access token，驗證後端邏輯
     // 使用 code 交換 Google 的訪問令牌和用戶資料
+    System.out.println("OAuth2 callback received with code: " + code + " and state: " + state);
 
     GoogleUser user;
     try {
