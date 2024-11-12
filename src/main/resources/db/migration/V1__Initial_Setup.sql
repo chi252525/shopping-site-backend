@@ -1,16 +1,36 @@
-
--- SQL script for the ec_merchant table
-CREATE TABLE ec_merchant (
+-- 1. SQL script for the ec_category table
+CREATE TABLE ec_category (
     id BIGSERIAL PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
-    enabled BOOLEAN NOT NULL,
+    description TEXT,
     created_at TIMESTAMP,
     updated_at TIMESTAMP,
     create_user_id BIGINT,
     update_user_id BIGINT
 );
 
--- SQL script for the ec_order table
+-- 2. SQL script for the ec_product table
+CREATE TABLE ec_product (
+    id BIGSERIAL PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    description TEXT,
+    price DOUBLE PRECISION NOT NULL,
+    category_id BIGINT NOT NULL,
+    created_at TIMESTAMP,
+    updated_at TIMESTAMP,
+    create_user_id BIGINT,
+    update_user_id BIGINT,
+    FOREIGN KEY (category_id) REFERENCES ec_category(id)
+);
+
+-- 3. SQL script for the ec_shopper table (assuming this table exists based on foreign key in ec_order)
+CREATE TABLE ec_shopper (
+    id BIGSERIAL PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL
+);
+
+-- 4. SQL script for the ec_order table
 CREATE TABLE ec_order (
     id BIGSERIAL PRIMARY KEY,
     indicationOrderNumber VARCHAR(255) NOT NULL,
@@ -30,7 +50,7 @@ CREATE TABLE ec_order (
     FOREIGN KEY (shopper_id) REFERENCES ec_shopper(id)
 );
 
--- SQL script for the ec_order_item table
+-- 5. SQL script for the ec_order_item table
 CREATE TABLE ec_order_item (
     id BIGSERIAL PRIMARY KEY,
     order_id BIGINT NOT NULL,
@@ -48,7 +68,7 @@ CREATE TABLE ec_order_item (
     FOREIGN KEY (order_id) REFERENCES ec_order(id)
 );
 
--- SQL script for the ec_attribute table
+-- 6. SQL script for the ec_attribute table
 CREATE TABLE ec_attribute (
     id BIGSERIAL PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
@@ -61,18 +81,7 @@ CREATE TABLE ec_attribute (
     FOREIGN KEY (product_id) REFERENCES ec_product(id)
 );
 
--- SQL script for the ec_category table
-CREATE TABLE ec_category (
-    id BIGSERIAL PRIMARY KEY,
-    name VARCHAR(255) NOT NULL,
-    description TEXT,
-    created_at TIMESTAMP,
-    updated_at TIMESTAMP,
-    create_user_id BIGINT,
-    update_user_id BIGINT
-);
-
--- SQL script for the ec_image table
+-- 7. SQL script for the ec_image table
 CREATE TABLE ec_image (
     id BIGSERIAL PRIMARY KEY,
     url VARCHAR(255) NOT NULL,
@@ -84,21 +93,18 @@ CREATE TABLE ec_image (
     FOREIGN KEY (product_id) REFERENCES ec_product(id)
 );
 
--- SQL script for the ec_product table
-CREATE TABLE ec_product (
+-- 8. SQL script for the ec_merchant table
+CREATE TABLE ec_merchant (
     id BIGSERIAL PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
-    description TEXT,
-    price DOUBLE PRECISION NOT NULL,
-    category_id BIGINT NOT NULL,
+    enabled BOOLEAN NOT NULL,
     created_at TIMESTAMP,
     updated_at TIMESTAMP,
     create_user_id BIGINT,
-    update_user_id BIGINT,
-    FOREIGN KEY (category_id) REFERENCES ec_category(id)
+    update_user_id BIGINT
 );
 
--- SQL script for the ec_refund_record table
+-- 9. SQL script for the ec_refund_record table
 CREATE TABLE ec_refund_record (
     id SERIAL PRIMARY KEY,
     order_id BIGINT NOT NULL,
@@ -110,4 +116,11 @@ CREATE TABLE ec_refund_record (
     create_user_id BIGINT,
     update_user_id BIGINT,
     FOREIGN KEY (order_id) REFERENCES ec_order(id)
+);
+
+-- 10. SQL script for the google_user table
+CREATE TABLE google_user (
+  id SERIAL PRIMARY KEY,
+  name VARCHAR(128) NOT NULL,
+  email VARCHAR(128) NOT NULL
 );
