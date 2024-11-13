@@ -1,9 +1,15 @@
 package com.shopping.shopping_site_backend.infra.dataprovider.entity.order;
 
+import com.shopping.shopping_site_backend.infra.constant.enumconstant.PaymentStatus;
+import com.shopping.shopping_site_backend.infra.constant.enumconstant.PaymentType;
+import com.shopping.shopping_site_backend.infra.constant.enumconstant.ShippingStatus;
+import com.shopping.shopping_site_backend.infra.constant.enumconstant.ShippingType;
 import com.shopping.shopping_site_backend.infra.dataprovider.entity.BaseEntity;
 import com.shopping.shopping_site_backend.infra.dataprovider.entity.shopper.Shopper;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -28,33 +34,70 @@ public class Order extends BaseEntity {
   private Long id; // 自动递增的 ID
 
   @Column(name = "indicationOrderNumber", nullable = false)
-  private String indicationOrderNumber; // 订单编号
+  private String indicationOrderNumber;
 
   @Column(name = "orderDate", nullable = false)
-  private LocalDateTime orderDate; // 订单日期
+  private LocalDateTime orderDate;
 
   @Column(name = "paymentDate")
-  private LocalDateTime paymentDate; // 支付日期
+  private LocalDateTime paymentDate;
 
-  @Column(name = "paymentType")
-  private String paymentType; // 支付类型
+  @Enumerated(EnumType.STRING)
+  @Column(name = "shipping_type", nullable = false)
+  private ShippingType shippingType;
 
-  @Column(name = "status", nullable = false)
-  private String status = "Shipping Complete"; // 状态，默认值为 'Shipping Complete'
+  @Enumerated(EnumType.STRING)
+  @Column(name = "shipping_status", nullable = false)
+  private ShippingStatus shippingStatus;
+
+  @Enumerated(EnumType.STRING)
+  @Column(name = "payment_type", nullable = false)
+  private PaymentType paymentType;
+
+  @Enumerated(EnumType.STRING)
+  @Column(name = "payment_status", nullable = false)
+  private PaymentStatus paymentStatus;
 
   @Column(name = "shopperType", nullable = false)
   private String shopperType;
 
   @Column(name = "shopperName", nullable = false)
-  private String shopperName; // 购物者姓名
+  private String shopperName;
 
   @Column(name = "shopperPaidAmount", nullable = false)
-  private Double shopperPaidAmount; // 购物者支付金额
+  private Double shopperPaidAmount;
 
   @Column(name = "discountTotal")
-  private Double discountTotal = 0.0; // 折扣总额，默认值为 0.0
+  private Double discountTotal = 0.0;
+
+  @Column(name = "shipping_fee", nullable = false)
+  private Double shippingFee;
+
+  @Column(name = "shopper_phone", nullable = false)
+  private String shopperPhone;
+
+  @Column(name = "shopperEmail", nullable = false)
+  private String shopperEmail;
+
+  @Column(name = "receiver_address")
+  private String receiverAddress;
+
+  @Column(name = "receiver_name", nullable = false)
+  private String receiverName;
+
+  @Column(name = "receiver_phone", nullable = false)
+  private String receiverPhone;
+
+  @Column(name = "receiver_shop_id")
+  private String receiverShopId;
+
+  @Column(name = "receiver_shop_name")
+  private String receiverShopName;
+
+  @Column(name = "receiver_shop_address")
+  private String receiverShopAddress;
 
   @ManyToOne
   @JoinColumn(name = "shopper_id", nullable = false)
-  private Shopper shopper; // Associated shopper
+  private Shopper shopper;
 }

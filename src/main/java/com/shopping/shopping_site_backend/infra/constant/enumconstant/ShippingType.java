@@ -1,7 +1,8 @@
 package com.shopping.shopping_site_backend.infra.constant.enumconstant;
 
 public enum ShippingType {
-  STANDARD("Standard"); // 标准运输
+  STANDARD("Standard"),
+  SEVENC2C("SEVENC2C");//
   private String description;
 
   ShippingType(String description) {

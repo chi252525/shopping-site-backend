@@ -35,22 +35,6 @@ public class OrderItem extends BaseEntity {
   @JoinColumn(name = "order_id", nullable = false)
   private Order order; // Associated order
 
-  @Enumerated(EnumType.STRING)
-  @Column(name = "shipping_type", nullable = false)
-  private ShippingType shippingType; // Shipping type
-
-  @Enumerated(EnumType.STRING)
-  @Column(name = "shipping_status", nullable = false)
-  private ShippingStatus shippingStatus; // Shipping status
-
-  @Enumerated(EnumType.STRING)
-  @Column(name = "payment_type", nullable = false)
-  private PaymentType paymentType; // Payment type
-
-  @Enumerated(EnumType.STRING)
-  @Column(name = "payment_status", nullable = false)
-  private PaymentStatus paymentStatus; // Payment status
-
   @Column(name = "sku", nullable = false)
   private String sku; // SKU
 

@@ -41,12 +41,23 @@ CREATE TABLE ec_order (
     indicationOrderNumber VARCHAR(255) NOT NULL,
     orderDate TIMESTAMP NOT NULL,
     paymentDate TIMESTAMP,
-    paymentType VARCHAR(255),
-    status VARCHAR(255) NOT NULL DEFAULT 'Shipping Complete',
+    shipping_type VARCHAR(255) NOT NULL,
+    shipping_status VARCHAR(255) NOT NULL,
+    payment_type VARCHAR(255) NOT NULL,
+    payment_status VARCHAR(255) NOT NULL,
     shopperType VARCHAR(255) NOT NULL,
     shopperName VARCHAR(255) NOT NULL,
     shopperPaidAmount DOUBLE PRECISION NOT NULL,
     discountTotal DOUBLE PRECISION DEFAULT 0.0,
+    shipping_fee DOUBLE PRECISION NOT NULL,
+    shopper_phone VARCHAR(255) NOT NULL,
+    shopperEmail VARCHAR(255) NOT NULL,
+    receiver_address VARCHAR(255),
+    receiver_name VARCHAR(255) NOT NULL,
+    receiver_phone VARCHAR(255) NOT NULL,
+    receiver_shop_id VARCHAR(255),
+    receiver_shop_name VARCHAR(255),
+    receiver_shop_address VARCHAR(255),
     shopper_id BIGINT NOT NULL,
     created_at TIMESTAMP,
     updated_at TIMESTAMP,
@@ -55,14 +66,10 @@ CREATE TABLE ec_order (
     FOREIGN KEY (shopper_id) REFERENCES ec_shopper(id)
 );
 
--- 5. SQL script for the ec_order_item table
+-- SQL script for the ec_order_item table
 CREATE TABLE ec_order_item (
     id BIGSERIAL PRIMARY KEY,
     order_id BIGINT NOT NULL,
-    shipping_type VARCHAR(255) NOT NULL,
-    shipping_status VARCHAR(255) NOT NULL,
-    payment_type VARCHAR(255) NOT NULL,
-    payment_status VARCHAR(255) NOT NULL,
     sku VARCHAR(255) NOT NULL,
     discount_price DOUBLE PRECISION NOT NULL,
     quantity INT NOT NULL,
