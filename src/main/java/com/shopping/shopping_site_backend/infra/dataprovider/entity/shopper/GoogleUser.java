@@ -1,31 +1,39 @@
 package com.shopping.shopping_site_backend.infra.dataprovider.entity.shopper;
 
-import com.shopping.shopping_site_backend.infra.sys.spring.entity.BaseEntity;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
-import org.hibernate.annotations.DynamicUpdate;
 
-@Getter
-@Setter
-@ToString
-@AllArgsConstructor
-@NoArgsConstructor
-@DynamicUpdate
-@Entity
-@Table(name = "google_user")
-public class GoogleUser extends BaseEntity {
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long id;
 
-  @Column(columnDefinition = "VARCHAR(128)", nullable = false)
+@Data
+public class GoogleUser {
+  @JsonProperty("id")
+  private String id;
+
+  @JsonProperty("email")
+  private String email;
+
+  @JsonProperty("verified_email")
+  private boolean verifiedEmail;
+
+  @JsonProperty("name")
   private String name;
 
-  @Column(columnDefinition = "VARCHAR(128)", nullable = false)
-  private String email;
+  @JsonProperty("given_name")
+  private String givenName;
+
+  @JsonProperty("family_name")
+  private String familyName;
+
+  @JsonProperty("picture")
+  private String picture;
+
+  @JsonProperty("locale")
+  private String locale;
+  // No-argument constructor
+  public GoogleUser() {}
+  public GoogleUser(Long id, String name, String email) {
+    this.id = id.toString();
+    this.name = name;
+    this.email = email;
+  }
 }

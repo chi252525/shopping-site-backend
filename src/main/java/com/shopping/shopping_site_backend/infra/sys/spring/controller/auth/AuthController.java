@@ -6,6 +6,7 @@ import com.shopping.shopping_site_backend.infra.sys.spring.service.JwtService;
 import java.net.URI;
 import java.util.HashMap;
 import java.util.Map;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -14,7 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
-
+@Slf4j
 @RestController
 @RequestMapping("/api")
 public class AuthController {
@@ -65,12 +66,11 @@ public class AuthController {
 
   @GetMapping("/oauth2/callback")
   public ResponseEntity<Map<String, String>> googleCallback(
-      @RequestParam String code, @RequestParam String state) {
+      @RequestParam String code) {
     logger.info("Received OAuth2 callback with code: {}", code);
-    logger.info("Received OAuth2 callback with state: {}", state);
     // 處理 code 取得 access token，驗證後端邏輯
     // 使用 code 交換 Google 的訪問令牌和用戶資料
-    System.out.println("OAuth2 callback received with code: " + code + " and state: " + state);
+    System.out.println("OAuth2 callback received with code: " + code );
 
     GoogleUser user;
     try {

@@ -29,18 +29,18 @@ import org.hibernate.annotations.DynamicUpdate;
 public class OrderItem extends BaseEntity {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long id; // OrderItem ID, auto-increment primary key
+  private Long id;
 
   @ManyToOne
   @JoinColumn(name = "order_id", nullable = false)
-  private Order order; // Associated order
+  private Order order;
 
   @Column(name = "sku", nullable = false)
-  private String sku; // SKU
+  private String sku;
 
   @Column(name = "discount_price", nullable = false)
-  private double discountPrice; // Discount price
+  private double discountPrice;
 
   @Column(name = "quantity", nullable = false)
-  private int quantity; // Quantity
+  private int quantity;
 }

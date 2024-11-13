@@ -3,6 +3,9 @@ package com.shopping.shopping_site_backend.infra.sys.spring.service;
 import com.shopping.shopping_site_backend.infra.dataprovider.entity.shopper.GoogleUser;
 import com.shopping.shopping_site_backend.infra.dataprovider.entity.shopper.Shopper;
 import com.shopping.shopping_site_backend.infra.sys.spring.repository.ShopperRepository;
+import java.util.Collections;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
@@ -15,6 +18,7 @@ import org.springframework.web.client.RestTemplate;
 
 @Service
 public class GoogleService {
+  private static final Logger logger = LoggerFactory.getLogger(GoogleService.class);
 
   @Value("${spring.security.oauth2.client.registration.google.client-id}")
   private String clientId;
@@ -63,7 +67,8 @@ public class GoogleService {
 
     // Check for successful response and extract token
     if (response.getStatusCode().is2xxSuccessful() && response.getBody() != null) {
-      return response.getBody().getAccessToken();
+      logger.info("accessToken: {}", response.getBody().getAccess_token());
+      return response.getBody().getAccess_token();
     } else {
       String errorMessage = "Failed to exchange code for token. Status: " + response.getStatusCode() +
           ", Response: " + response.getBody();
@@ -74,18 +79,24 @@ public class GoogleService {
 
   private GoogleUser fetchUserProfile(String accessToken) {
     String userInfoUrl = "https://www.googleapis.com/oauth2/v2/userinfo";
-
+    logger.info("User profile accessToken: {}", accessToken);
     HttpHeaders headers = new HttpHeaders();
-    headers.set("Authorization", "Bearer " + accessToken);
+    headers.setBearerAuth(accessToken);  // accessToken 是您從 Google OAuth2 獲得的令牌
+    headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
 
     // 發送 GET 請求以獲取用戶資料
-    ResponseEntity<GoogleUser> response =
-        restTemplate.exchange(
-            userInfoUrl, HttpMethod.GET, new HttpEntity<>(headers), GoogleUser.class);
-
+    HttpEntity<String> entity = new HttpEntity<>(headers);
+    ResponseEntity<GoogleUser> response = restTemplate.exchange(
+        userInfoUrl,
+        HttpMethod.GET,
+        entity,
+        GoogleUser.class
+    );
+    logger.info("User profile response: {}", response);
     if (response.getStatusCode().is2xxSuccessful() && response.getBody() != null) {
       return response.getBody();
     } else {
+      System.out.println("Error retrieving user info: " + response.getStatusCode() );
       throw new RuntimeException("Failed to fetch user profile");
     }
   }
