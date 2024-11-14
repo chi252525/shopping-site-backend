@@ -14,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.view.RedirectView;
 import org.springframework.web.util.UriComponentsBuilder;
 @Slf4j
 @RestController
@@ -65,7 +66,7 @@ public class AuthController {
   }
 
   @GetMapping("/oauth2/callback")
-  public ResponseEntity<Map<String, String>> googleCallback(
+  public RedirectView googleCallback(
       @RequestParam String code) {
     logger.info("Received OAuth2 callback with code: {}", code);
     // 處理 code 取得 access token，驗證後端邏輯
@@ -78,9 +79,9 @@ public class AuthController {
       logger.info("Successfully retrieved user info: {}", user);
     } catch (Exception e) {
       logger.error("Error retrieving user info: {}", e.getMessage());
-      return ResponseEntity.status(500)
-          .body(Map.of("status", "error", "message", "Failed to retrieve user info"));
-    }
+      RedirectView redirectView = new RedirectView();
+      redirectView.setUrl("http://localhost:9000/");  // 將 URL 設定為 Vue 應用的根路徑
+      return redirectView;   }
 
     // 檢查用戶是否存在，並根據需要創建或更新用戶資料
     // 生成 JWT token
@@ -89,7 +90,9 @@ public class AuthController {
     response.put("status", "success");
     response.put("message", "Login successful");
     response.put("token", token); // 返回 JWT 或 session ID
-    return ResponseEntity.ok(response);
+    RedirectView redirectView = new RedirectView();
+    redirectView.setUrl("http://localhost:9000/?token=" + token); // 將 URL 設定為 Vue 應用的根路徑
+    return redirectView;
   }
 
   @GetMapping("/user/profile")
