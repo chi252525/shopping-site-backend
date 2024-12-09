@@ -16,6 +16,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
 import org.springframework.web.util.UriComponentsBuilder;
+
 @Slf4j
 @RestController
 @RequestMapping("/api")
@@ -66,12 +67,11 @@ public class AuthController {
   }
 
   @GetMapping("/oauth2/callback")
-  public RedirectView googleCallback(
-      @RequestParam String code) {
+  public RedirectView googleCallback(@RequestParam String code) {
     logger.info("Received OAuth2 callback with code: {}", code);
     // 處理 code 取得 access token，驗證後端邏輯
     // 使用 code 交換 Google 的訪問令牌和用戶資料
-    System.out.println("OAuth2 callback received with code: " + code );
+    System.out.println("OAuth2 callback received with code: " + code);
 
     GoogleUser user;
     try {
@@ -80,8 +80,9 @@ public class AuthController {
     } catch (Exception e) {
       logger.error("Error retrieving user info: {}", e.getMessage());
       RedirectView redirectView = new RedirectView();
-      redirectView.setUrl("http://localhost:9000/");  // 將 URL 設定為 Vue 應用的根路徑
-      return redirectView;   }
+      redirectView.setUrl("http://localhost:9000/"); // 將 URL 設定為 Vue 應用的根路徑
+      return redirectView;
+    }
 
     // 檢查用戶是否存在，並根據需要創建或更新用戶資料
     // 生成 JWT token

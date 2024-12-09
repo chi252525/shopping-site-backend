@@ -53,12 +53,12 @@ public class OrderTransController {
     return this.orderTransactionPresentation.refundOrder(request);
   }
 
-  //更新訂單狀態（Update Order Status）
-//  方法：PUT
-////  路徑：/orders/{id}/status
-////  描述：更新訂單的狀態，常見的狀態有「待處理」、「已發貨」、「已取消」等。
-////  參數：id（訂單ID）、status（訂單狀態）
-////  返回：更新後的訂單
+  // 更新訂單狀態（Update Order Status）
+  //  方法：PUT
+  ////  路徑：/orders/{id}/status
+  ////  描述：更新訂單的狀態，常見的狀態有「待處理」、「已發貨」、「已取消」等。
+  ////  參數：id（訂單ID）、status（訂單狀態）
+  ////  返回：更新後的訂單
   @Operation(
       tags = {"訂單交易"},
       summary = "更新訂單狀態",
@@ -69,10 +69,4 @@ public class OrderTransController {
       @Parameter(description = "訂單狀態", required = true) @RequestParam("status") String status) {
     return this.orderTransactionPresentation.updateOrderStatus(id, status);
   }
-
-
-
-
-
-
 }

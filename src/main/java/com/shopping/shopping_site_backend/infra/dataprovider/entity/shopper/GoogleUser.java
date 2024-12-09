@@ -3,7 +3,6 @@ package com.shopping.shopping_site_backend.infra.dataprovider.entity.shopper;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
-
 @Data
 public class GoogleUser {
   @JsonProperty("id")
@@ -31,6 +30,7 @@ public class GoogleUser {
   private String locale;
   // No-argument constructor
   public GoogleUser() {}
+
   public GoogleUser(Long id, String name, String email) {
     this.id = id.toString();
     this.name = name;

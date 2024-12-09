@@ -50,9 +50,10 @@ public class GoogleService {
     String tokenUrl = "https://oauth2.googleapis.com/token";
 
     // Create the request body
-    String requestBody = String.format(
-        "code=%s&client_id=%s&client_secret=%s&redirect_uri=%s&grant_type=authorization_code",
-        code, clientId, clientSecret, redirectUri);
+    String requestBody =
+        String.format(
+            "code=%s&client_id=%s&client_secret=%s&redirect_uri=%s&grant_type=authorization_code",
+            code, clientId, clientSecret, redirectUri);
 
     // Set headers for the POST request
     HttpHeaders headers = new HttpHeaders();
@@ -60,43 +61,39 @@ public class GoogleService {
 
     // Send POST request
     HttpEntity<String> entity = new HttpEntity<>(requestBody, headers);
-    ResponseEntity<TokenResponse> response = restTemplate.postForEntity(
-        tokenUrl, entity, TokenResponse.class);
-
-
+    ResponseEntity<TokenResponse> response =
+        restTemplate.postForEntity(tokenUrl, entity, TokenResponse.class);
 
     // Check for successful response and extract token
     if (response.getStatusCode().is2xxSuccessful() && response.getBody() != null) {
       logger.info("accessToken: {}", response.getBody().getAccess_token());
       return response.getBody().getAccess_token();
     } else {
-      String errorMessage = "Failed to exchange code for token. Status: " + response.getStatusCode() +
-          ", Response: " + response.getBody();
+      String errorMessage =
+          "Failed to exchange code for token. Status: "
+              + response.getStatusCode()
+              + ", Response: "
+              + response.getBody();
       throw new RuntimeException(errorMessage);
     }
   }
-
 
   private GoogleUser fetchUserProfile(String accessToken) {
     String userInfoUrl = "https://www.googleapis.com/oauth2/v2/userinfo";
     logger.info("User profile accessToken: {}", accessToken);
     HttpHeaders headers = new HttpHeaders();
-    headers.setBearerAuth(accessToken);  // accessToken 是您從 Google OAuth2 獲得的令牌
+    headers.setBearerAuth(accessToken); // accessToken 是您從 Google OAuth2 獲得的令牌
     headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
 
     // 發送 GET 請求以獲取用戶資料
     HttpEntity<String> entity = new HttpEntity<>(headers);
-    ResponseEntity<GoogleUser> response = restTemplate.exchange(
-        userInfoUrl,
-        HttpMethod.GET,
-        entity,
-        GoogleUser.class
-    );
+    ResponseEntity<GoogleUser> response =
+        restTemplate.exchange(userInfoUrl, HttpMethod.GET, entity, GoogleUser.class);
     logger.info("User profile response: {}", response);
     if (response.getStatusCode().is2xxSuccessful() && response.getBody() != null) {
       return response.getBody();
     } else {
-      System.out.println("Error retrieving user info: " + response.getStatusCode() );
+      System.out.println("Error retrieving user info: " + response.getStatusCode());
       throw new RuntimeException("Failed to fetch user profile");
     }
   }

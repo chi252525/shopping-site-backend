@@ -7,8 +7,11 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -19,6 +22,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
 @Tag(name = "產品")
 @RequiredArgsConstructor
 @RestController
@@ -48,18 +52,22 @@ public class ProductController {
   public ResponseEntity<ProductResponseV1_0> getProductById(
       @Parameter(required = true) @PathVariable("id") Long id) {
     ProductResponseV1_0 product = productPresentation.getProductById(id);
-    return product != null ? new ResponseEntity<>(product, HttpStatus.OK)
+    return product != null
+        ? new ResponseEntity<>(product, HttpStatus.OK)
         : new ResponseEntity<>(HttpStatus.NOT_FOUND);
   }
 
   // Get All Products
   @Operation(
       tags = {"產品"},
-      summary = "查詢所有產品",
-      description = "獲取所有產品的列表")
+      summary = "查詢所有產品（分頁）",
+      description = "獲取所有產品的列表，支持條件查詢與分頁")
   @GetMapping("/list")
-  public ResponseEntity<List<ProductResponseV1_0>> getAllProducts(ProductRequestV1_0 request) {
-    List<ProductResponseV1_0> products = productPresentation.presentV1_0(request);
+  public ResponseEntity<Page<ProductResponseV1_0>> getAllProducts(
+      ProductRequestV1_0 request,
+      @PageableDefault(size = 10, sort = "name", direction = Sort.Direction.ASC)
+          Pageable pageable) {
+    Page<ProductResponseV1_0> products = productPresentation.query(request, pageable);
     return new ResponseEntity<>(products, HttpStatus.OK);
   }
 
@@ -72,9 +80,8 @@ public class ProductController {
   public ResponseEntity<ProductResponseV1_0> updateProduct(
       @Parameter(required = true) @PathVariable("id") Long id,
       @Parameter(required = true) @Valid @RequestBody ProductRequestV1_0 request) {
-    ProductResponseV1_0 updatedProduct = productPresentation.updateProduct(id, request);
-    return updatedProduct != null ? new ResponseEntity<>(updatedProduct, HttpStatus.OK)
-        : new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    productPresentation.updateProduct(id, request);
+    return new ResponseEntity<>(HttpStatus.OK);
   }
 
   // Delete Product
@@ -85,8 +92,7 @@ public class ProductController {
   @DeleteMapping("/{id}/delete")
   public ResponseEntity<Void> deleteProduct(
       @Parameter(required = true) @PathVariable("id") Long id) {
-    boolean isDeleted = productPresentation.deleteProduct(id);
-    return isDeleted ? new ResponseEntity<>(HttpStatus.NO_CONTENT)
-        : new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    productPresentation.deleteProduct(id);
+    return new ResponseEntity<>(HttpStatus.OK);
   }
 }

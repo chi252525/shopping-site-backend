@@ -6,7 +6,7 @@ public enum OrderStatus {
   SHIPPED("Shipped"),
   DELIVERED("Delivered"),
   CANCELED("Canceled"),
-  REFUNDED("Refunded");// 已退款;
+  REFUNDED("Refunded"); // 已退款;
   private String description;
 
   OrderStatus(String description) {

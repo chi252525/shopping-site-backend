@@ -17,17 +17,20 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("${intranet}/my-order")
 public class MyOrderController {
 
-    private final MyOrderPresentation myOrderPresentation;
+  private final MyOrderPresentation myOrderPresentation;
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Order> getMyOrderById(@PathVariable("id") Long id) {
-      Order order = myOrderPresentation.getMyOrderById(id);
-      return order != null ? ResponseEntity.ok(order) : ResponseEntity.notFound().build();
-    }
+  @GetMapping("/{id}")
+  public ResponseEntity<Order> getMyOrderById(@PathVariable("id") Long id) {
+    Order order = myOrderPresentation.getMyOrderById(id);
+    return order != null ? ResponseEntity.ok(order) : ResponseEntity.notFound().build();
+  }
 
   @GetMapping("/shopper/{shopperId}")
-  public ResponseEntity<List<Order>> getMyOrderByShopperId(@PathVariable("shopperId") Long shopperId) {
+  public ResponseEntity<List<Order>> getMyOrderByShopperId(
+      @PathVariable("shopperId") Long shopperId) {
     List<Order> orders = myOrderPresentation.getMyOrderByShopperId(shopperId);
-    return orders != null && !orders.isEmpty() ? ResponseEntity.ok(orders) : ResponseEntity.notFound().build();
+    return orders != null && !orders.isEmpty()
+        ? ResponseEntity.ok(orders)
+        : ResponseEntity.notFound().build();
   }
 }
