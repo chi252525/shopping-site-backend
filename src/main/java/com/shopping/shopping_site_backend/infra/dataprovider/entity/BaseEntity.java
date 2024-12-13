@@ -3,10 +3,11 @@ package com.shopping.shopping_site_backend.infra.dataprovider.entity;
 import jakarta.persistence.Column;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
+import lombok.Data;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 import java.time.LocalDateTime;
-
+@Data
 public class BaseEntity {
   @Column(name = "created_at", updatable = false)
   private LocalDateTime createdAt; // 创建时间
