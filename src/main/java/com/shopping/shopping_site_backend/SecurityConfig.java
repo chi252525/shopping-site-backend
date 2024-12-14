@@ -57,6 +57,7 @@ public class SecurityConfig {
                         "/api/oauth2/callback",
                         "/swagger-ui/**",
                         "/swagger-ui/index.html",
+                        "/intranet/**",
                         "/v3/api-docs/**",
                         "/error")
                     .permitAll() // 允許 login 頁面、OAuth2 路徑、Swagger UI 和 API 文件被無需驗證的方式訪問

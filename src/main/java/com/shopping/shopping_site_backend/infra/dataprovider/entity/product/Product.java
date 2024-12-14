@@ -25,39 +25,41 @@ import org.hibernate.annotations.DynamicUpdate;
 public class Product extends BaseEntity {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long id; // 产品 ID，自增主键
+  private Long id;
 
   @Column(name = "base_sku", nullable = false)
-  private String baseSku; // 基本 SKU
+  private String baseSku;
 
   @Column(name = "name", nullable = false)
-  private String name; // 产品名称
+  private String name;
 
   @Column(name = "unit_price", nullable = false)
-  private Double unitPrice; // 单位价格
+  private Double unitPrice;
 
   @Column(name = "sale_price")
-  private Double salePrice; // 销售价格
+  private Double salePrice;
 
   @Column(name = "discount_price")
-  private Double discountPrice; // 折扣价格
+  private Double discountPrice;
 
   @Column(name = "version_id", nullable = false)
-  private Integer versionId; // 版本 ID
+  private Integer versionId;
 
   @Column(name = "unit", nullable = false)
-  private String unit; // 单位
+  private String unit;
 
   @Column(name = "in_stock", nullable = false)
-  private Boolean inStock; // 是否有库存
+  private Boolean inStock;
 
   @Column(name = "available_start_time")
-  private LocalDateTime availableStartTime; // 可用开始时间
+  private LocalDateTime availableStartTime;
 
   @Column(name = "available_end_time")
-  private LocalDateTime availableEndTime; // 可用结束时间
+  private LocalDateTime availableEndTime;
 
   @ManyToOne
   @JoinColumn(name = "merchant_id", nullable = false)
-  private Merchant merchant; // 关联的商家
+  private Merchant merchant;
+
+
 }
