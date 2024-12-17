@@ -13,6 +13,7 @@ public class WebConfig implements WebMvcConfigurer {
     registry
         .addMapping("/**")
         .allowedOrigins("https://shopping-site-front.vercel.app/")
+        .allowedOrigins("https://shopping-site-admin-front-lr33.vercel.app/")
         .allowedOrigins("http://localhost:9000")
         .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
         .allowedHeaders("*")
