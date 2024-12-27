@@ -1,12 +1,16 @@
-# fly.toml app configuration file generated for shopping-site-backend-crimson-dew-5466 on 2024-10-10T18:19:11+08:00
+# fly.toml app configuration file generated for shopping-site-backend-shy-rain-9869 on 2024-12-27T13:50:26+08:00
 #
 # See https://fly.io/docs/reference/configuration/ for information about how to use this file.
 #
 
-app = 'shopping-site-backend-crimson-dew-5466'
+app = 'shopping-site-backend-shy-rain-9869'
 primary_region = 'hkg'
 
 [build]
+
+[env]
+  SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNtc2hyb2JjbmZ5bWJ0YWZlaWNwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mjk2NTI2NTAsImV4cCI6MjA0NTIyODY1MH0.ZAhCnijE6pfewnFfQW9RNwfWvdP_TcO1OrLPv4o220s'
+  SUPABASE_URL = 'https://cmshrobcnfymbtafeicp.supabase.co'
 
 [http_service]
   internal_port = 8080
@@ -32,10 +36,3 @@ primary_region = 'hkg'
   memory = '1gb'
   cpu_kind = 'shared'
   cpus = 1
-
-[env]
-SUPABASE_URL = "https://cmshrobcnfymbtafeicp.supabase.co"
-SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNtc2hyb2JjbmZ5bWJ0YWZlaWNwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mjk2NTI2NTAsImV4cCI6MjA0NTIyODY1MH0.ZAhCnijE6pfewnFfQW9RNwfWvdP_TcO1OrLPv4o220s"
-
-
-

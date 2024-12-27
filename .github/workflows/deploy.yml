@@ -1,0 +1,26 @@
+name: Deploy to Fly.io
+
+on:
+  push:
+    branches:
+      - main 
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Install Fly CLI
+      run: |
+        curl -L https://fly.io/install.sh | sh
+        export PATH=$HOME/.fly/bin:$PATH
+
+    - name: Deploy to Fly.io
+      env:
+        FLY_API_TOKEN: fo1_1QQoDpnKlPni2DZNRbYfBChlmyiIh0HOJ9bt0a1uNj8
+      run: |
+        fly deploy
+
