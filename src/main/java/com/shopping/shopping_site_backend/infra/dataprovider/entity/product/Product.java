@@ -47,7 +47,7 @@ public class Product extends BaseEntity {
   private Double discountPrice;
 
   @Column(name = "version_id", nullable = false)
-  private Integer versionId;
+  private String versionId;
 
   @Column(name = "unit", nullable = false)
   private String unit;
