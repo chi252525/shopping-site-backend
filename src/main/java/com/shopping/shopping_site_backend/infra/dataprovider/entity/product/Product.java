@@ -2,6 +2,7 @@ package com.shopping.shopping_site_backend.infra.dataprovider.entity.product;
 
 import com.shopping.shopping_site_backend.infra.dataprovider.entity.BaseEntity;
 import com.shopping.shopping_site_backend.infra.dataprovider.entity.merchant.Merchant;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -9,8 +10,11 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import lombok.*;
 import org.hibernate.annotations.DynamicUpdate;
 
@@ -61,5 +65,8 @@ public class Product extends BaseEntity {
   @JoinColumn(name = "merchant_id", nullable = false)
   private Merchant merchant;
 
+  @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
+  @ToString.Exclude // 防止循环引用
+  private List<Image> images = new ArrayList<>(); // 关联的图片列表
 
 }

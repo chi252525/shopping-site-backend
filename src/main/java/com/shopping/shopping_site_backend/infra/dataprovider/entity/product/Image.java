@@ -31,8 +31,6 @@ public class Image extends BaseEntity {
   @JoinColumn(name = "product_id", nullable = false)
   private Product product; // 关联的产品
 
-  @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
-  @ToString.Exclude // 防止循环引用
-  private List<Image> images = new ArrayList<>(); // 关联的图片列表
+
 
 }

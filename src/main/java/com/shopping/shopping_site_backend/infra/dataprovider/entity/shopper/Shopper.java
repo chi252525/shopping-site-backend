@@ -55,6 +55,6 @@ public class Shopper extends BaseEntity {
   private LocalDate birthDate;
 
   /** 更新時間 */
-  @Column(columnDefinition = "DATETIME", nullable = false)
+  @Column(columnDefinition = "TIMESTAMP", nullable = false)
   private LocalDateTime updatedAt;
 }
