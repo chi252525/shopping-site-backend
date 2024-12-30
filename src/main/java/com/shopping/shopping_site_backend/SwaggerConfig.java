@@ -17,14 +17,14 @@ public class SwaggerConfig {
     return new OpenAPI()
         .info(
             new Info()
-                .title("Ironman202 API Documentation ")
+                .title("Harikids API Documentation ")
                 .description("SpringBoot 3.x application")
                 .version("v0.0.1")
                 .license(new License().name("Your License").url("http://springdoc.org"))
                 .contact(
                     new Contact()
-                        .name("Ian Liu")
-                        .email("ianliu@example.com")
-                        .url("Your Website URl")));
+                        .name("chuenningyeh")
+                        .email("chuenningyeh@gmail.com")
+                        .url("https://shopping-site-backend.fly.dev/")));
   }
 }

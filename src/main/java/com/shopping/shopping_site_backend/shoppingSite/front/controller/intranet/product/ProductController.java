@@ -48,7 +48,7 @@ public class ProductController {
       tags = {"產品"},
       summary = "根據ID查詢產品",
       description = "根據產品ID獲取產品詳細信息")
-  @GetMapping("/{id}")
+  @GetMapping("/{id}/get")
   public ResponseEntity<ProductResponseV1_0> getProductById(
       @Parameter(required = true) @PathVariable("id") Long id) {
     ProductResponseV1_0 product = productPresentation.getProductById(id);
