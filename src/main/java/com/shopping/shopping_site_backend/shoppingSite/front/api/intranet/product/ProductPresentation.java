@@ -1,8 +1,8 @@
 package com.shopping.shopping_site_backend.shoppingSite.front.api.intranet.product;
 
 import com.shopping.shopping_site_backend.infra.dataprovider.entity.product.Product;
-import com.shopping.shopping_site_backend.shoppingSite.front.controller.intranet.product.model.ProductRequestV1_0;
-import com.shopping.shopping_site_backend.shoppingSite.front.controller.intranet.product.model.ProductResponseV1_0;
+import com.shopping.shopping_site_backend.shoppingSite.front.controller.intranet.product.model.ProductRequest;
+import com.shopping.shopping_site_backend.shoppingSite.front.controller.intranet.product.model.ProductResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -16,7 +16,7 @@ import org.springframework.stereotype.Service;
 public class ProductPresentation {
   private final ProductFlow productFlow;
 
-  public Page<ProductResponseV1_0> query(ProductRequestV1_0 request, Pageable pageable) {
+  public Page<ProductResponse> query(ProductRequest request, Pageable pageable) {
     Page<Product> products =
         productFlow.query(
             request.getMerchantId(),
@@ -32,8 +32,8 @@ public class ProductPresentation {
     return products.map(this::toResponse);
   }
 
-  private ProductResponseV1_0 toResponse(Product product) {
-    ProductResponseV1_0 response = new ProductResponseV1_0();
+  private ProductResponse toResponse(Product product) {
+    ProductResponse response = new ProductResponse();
     response.setId(product.getId());
     response.setName(product.getName());
     response.setUnitPrice(product.getUnitPrice());
@@ -42,7 +42,7 @@ public class ProductPresentation {
     return response;
   }
 
-  public void updateProduct(Long id, @Valid ProductRequestV1_0 request) {
+  public void updateProduct(Long id, @Valid ProductRequest request) {
     productFlow.updateProduct(id, request);
   }
 
@@ -50,12 +50,12 @@ public class ProductPresentation {
     productFlow.deleteByProductId(id);
   }
 
-  public ProductResponseV1_0 getProductById(Long id) {
+  public ProductResponse getProductById(Long id) {
     Product product = productFlow.getProductById(id);
     return toResponse(product);
   }
 
-  public ProductResponseV1_0 createProduct(@Valid ProductRequestV1_0 request) {
+  public ProductResponse createProduct(@Valid ProductRequest request) {
     Product product = productFlow.createProduct(request);
     return toResponse(product);
   }

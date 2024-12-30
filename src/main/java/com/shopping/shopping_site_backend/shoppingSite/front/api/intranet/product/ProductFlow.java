@@ -2,7 +2,7 @@ package com.shopping.shopping_site_backend.shoppingSite.front.api.intranet.produ
 
 import com.shopping.shopping_site_backend.infra.dataprovider.entity.product.Product;
 import com.shopping.shopping_site_backend.infra.sys.spring.repository.ProductRepository;
-import com.shopping.shopping_site_backend.shoppingSite.front.controller.intranet.product.model.ProductRequestV1_0;
+import com.shopping.shopping_site_backend.shoppingSite.front.controller.intranet.product.model.ProductRequest;
 import java.time.LocalDateTime;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
@@ -93,7 +93,7 @@ public class ProductFlow {
     return productOptional.get();
   }
 
-  public void updateProduct(Long id, ProductRequestV1_0 request) {
+  public void updateProduct(Long id, ProductRequest request) {
     Optional<Product> productOptional = productRepository.findById(id);
     if (!productOptional.isPresent()) {
       throw new RuntimeException();
@@ -101,7 +101,7 @@ public class ProductFlow {
     productRepository.save(toProduct(request, productOptional.get()));
   }
 
-  private Product toProduct(ProductRequestV1_0 request, Product product) {
+  private Product toProduct(ProductRequest request, Product product) {
     if (request == null) {
       return null;
     }
@@ -116,7 +116,7 @@ public class ProductFlow {
     return product;
   }
 
-  public Product createProduct(ProductRequestV1_0 request) {
+  public Product createProduct(ProductRequest request) {
     return productRepository.save(toProduct(request, new Product()));
   }
 }

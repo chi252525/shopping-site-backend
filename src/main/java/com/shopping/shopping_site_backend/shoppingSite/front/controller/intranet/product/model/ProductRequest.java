@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 import lombok.Data;
 
 @Data
-public class ProductRequestV1_0 {
+public class ProductRequest {
 
   @Schema(description = "商家 ID", example = "1")
   private Long merchantId;

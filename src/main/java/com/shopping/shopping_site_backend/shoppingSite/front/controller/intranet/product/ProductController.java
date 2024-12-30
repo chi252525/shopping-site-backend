@@ -1,8 +1,8 @@
 package com.shopping.shopping_site_backend.shoppingSite.front.controller.intranet.product;
 
 import com.shopping.shopping_site_backend.shoppingSite.front.api.intranet.product.ProductPresentation;
-import com.shopping.shopping_site_backend.shoppingSite.front.controller.intranet.product.model.ProductRequestV1_0;
-import com.shopping.shopping_site_backend.shoppingSite.front.controller.intranet.product.model.ProductResponseV1_0;
+import com.shopping.shopping_site_backend.shoppingSite.front.controller.intranet.product.model.ProductRequest;
+import com.shopping.shopping_site_backend.shoppingSite.front.controller.intranet.product.model.ProductResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -37,9 +37,9 @@ public class ProductController {
       summary = "新增產品",
       description = "創建新的產品")
   @PostMapping("/create")
-  public ResponseEntity<ProductResponseV1_0> createProduct(
-      @Parameter(required = true) @Valid @RequestBody ProductRequestV1_0 request) {
-    ProductResponseV1_0 product = productPresentation.createProduct(request);
+  public ResponseEntity<ProductResponse> createProduct(
+      @Parameter(required = true) @Valid @RequestBody ProductRequest request) {
+    ProductResponse product = productPresentation.createProduct(request);
     return new ResponseEntity<>(product, HttpStatus.CREATED);
   }
 
@@ -49,9 +49,9 @@ public class ProductController {
       summary = "根據ID查詢產品",
       description = "根據產品ID獲取產品詳細信息")
   @GetMapping("/{id}/get")
-  public ResponseEntity<ProductResponseV1_0> getProductById(
-      @Parameter(required = true) @PathVariable("id") Long id) {
-    ProductResponseV1_0 product = productPresentation.getProductById(id);
+  public ResponseEntity<ProductResponse> getProductById(
+      @Parameter(required = true) @PathVariable("id") String id) {
+    ProductResponse product = productPresentation.getProductById(Long.valueOf(id));
     return product != null
         ? new ResponseEntity<>(product, HttpStatus.OK)
         : new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -63,11 +63,11 @@ public class ProductController {
       summary = "查詢所有產品（分頁）",
       description = "獲取所有產品的列表，支持條件查詢與分頁")
   @GetMapping("/list")
-  public ResponseEntity<Page<ProductResponseV1_0>> getAllProducts(
-      ProductRequestV1_0 request,
+  public ResponseEntity<Page<ProductResponse>> getAllProducts(
+      ProductRequest request,
       @PageableDefault(size = 10, sort = "name", direction = Sort.Direction.ASC)
           Pageable pageable) {
-    Page<ProductResponseV1_0> products = productPresentation.query(request, pageable);
+    Page<ProductResponse> products = productPresentation.query(request, pageable);
     return new ResponseEntity<>(products, HttpStatus.OK);
   }
 
@@ -77,9 +77,9 @@ public class ProductController {
       summary = "更新產品",
       description = "根據ID更新現有的產品")
   @PutMapping("/{id}/update")
-  public ResponseEntity<ProductResponseV1_0> updateProduct(
+  public ResponseEntity<ProductResponse> updateProduct(
       @Parameter(required = true) @PathVariable("id") Long id,
-      @Parameter(required = true) @Valid @RequestBody ProductRequestV1_0 request) {
+      @Parameter(required = true) @Valid @RequestBody ProductRequest request) {
     productPresentation.updateProduct(id, request);
     return new ResponseEntity<>(HttpStatus.OK);
   }
