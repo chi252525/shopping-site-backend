@@ -14,7 +14,6 @@ public class WebConfig implements WebMvcConfigurer {
         .addMapping("/**")
         .allowedOrigins(
             "https://shopping-site-front.vercel.app",
-            "https://shopping-site-admin-front-lr33.vercel.app",
             "https://shopping-site-admin-front.vercel.app",
             "http://localhost:9000"
         )
