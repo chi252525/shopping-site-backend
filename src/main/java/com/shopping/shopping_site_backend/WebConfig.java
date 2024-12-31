@@ -15,6 +15,7 @@ public class WebConfig implements WebMvcConfigurer {
         .allowedOrigins(
             "https://shopping-site-front.vercel.app",
             "https://shopping-site-admin-front-lr33.vercel.app",
+            "https://shopping-site-admin-front.vercel.app",
             "http://localhost:9000"
         )
         .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
