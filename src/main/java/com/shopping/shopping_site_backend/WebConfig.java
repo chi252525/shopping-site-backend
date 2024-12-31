@@ -19,8 +19,7 @@ public class WebConfig implements WebMvcConfigurer {
             "http://localhost:9000"
         )
         .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
-        .allowedHeaders("*")
-        .allowCredentials(true);
+        .allowedHeaders("*");
   }
 
   @Bean
