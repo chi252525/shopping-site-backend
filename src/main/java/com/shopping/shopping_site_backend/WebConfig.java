@@ -17,8 +17,8 @@ public class WebConfig implements WebMvcConfigurer {
             "https://shopping-site-admin-front.vercel.app",
             "http://localhost:9000"
         )
-        .allowedHeaders("Access-Control-Allow-Origin", "Cache-Control","Authorization", "Content-Type", "*")  // 允许的请求头
-        .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS");
+            .allowedHeaders("Authorization", "Content-Type", "Cache-Control", "*")
+            .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS");
   }
 
   @Bean

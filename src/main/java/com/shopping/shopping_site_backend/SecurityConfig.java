@@ -103,19 +103,7 @@ public class SecurityConfig {
     return new CustomAuthenticationFilter();
   }
 
-  @Bean
-  public CorsFilter corsFilter() {
-        CorsConfiguration config = new CorsConfiguration();
-
-      config.addAllowedOrigin("http://localhost:9000");
-      config.addAllowedOrigin("https://shopping-site-front.vercel.app");
-      config.addAllowedOrigin("https://shopping-site-admin-front.vercel.app");
-      config.addAllowedMethod("*");
-      config.addAllowedHeader("*");
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", config);
-        return new CorsFilter(source);
-  }
+ 
   //  @Bean
   //  public AuthenticationSuccessHandler customAuthenticationSuccessHandler() {
   //    return (request, response, authentication) -> {
