@@ -112,7 +112,7 @@ public class SecurityConfig {
         configuration.addAllowedOrigin("https://shopping-site-admin-front.vercel.app");
         configuration.addAllowedMethod("*");
         configuration.addAllowedHeader("*");
-        configuration.setAllowCredentials(true);
+ 
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
