@@ -8,18 +8,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
-  @Override
-  public void addCorsMappings(CorsRegistry registry) {
-    registry
-        .addMapping("/**")
-        .allowedOrigins(
-            "https://shopping-site-front.vercel.app",
-            "https://shopping-site-admin-front.vercel.app",
-            "http://localhost:9000"
-        )
-            .allowedHeaders("Authorization", "Content-Type", "Cache-Control", "*")
-            .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS");
-  }
+
 
   @Bean
   public RestTemplate restTemplate() {

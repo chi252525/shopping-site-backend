@@ -18,6 +18,7 @@ import org.springframework.security.oauth2.core.endpoint.OAuth2AuthorizationRequ
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
 import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
@@ -50,8 +51,9 @@ public class SecurityConfig {
             return customizeAuthorizationRequest(authorizationRequest);
           }
         };
-    http.csrf(AbstractHttpConfigurer::disable) // 禁用 CSRF 保護 (請小心使用)
-        .authorizeHttpRequests(
+    http.csrf(AbstractHttpConfigurer::disable)
+            .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+            .authorizeHttpRequests(
             authorize ->
                 authorize
                     .requestMatchers(
@@ -102,8 +104,21 @@ public class SecurityConfig {
   public CustomAuthenticationFilter customAuthenticationFilter() {
     return new CustomAuthenticationFilter();
   }
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.addAllowedOrigin("http://localhost:9000");
+        configuration.addAllowedOrigin("https://shopping-site-front.vercel.app");
+        configuration.addAllowedOrigin("https://shopping-site-admin-front.vercel.app");
+        configuration.addAllowedMethod("*");
+        configuration.addAllowedHeader("*");
+        configuration.setAllowCredentials(true);
 
- 
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+        return source;
+    }
+
   //  @Bean
   //  public AuthenticationSuccessHandler customAuthenticationSuccessHandler() {
   //    return (request, response, authentication) -> {
