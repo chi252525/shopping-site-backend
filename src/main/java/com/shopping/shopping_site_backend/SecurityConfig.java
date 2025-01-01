@@ -111,9 +111,22 @@ public class SecurityConfig {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowedOrigins(Arrays.asList("http://localhost:9000","https://localhost:9000","https://shopping-site-front.vercel.app","https://shopping-site-admin-front.vercel.app"));
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
-        configuration.setAllowedHeaders(Arrays.asList("*"));
-
-
+        configuration.setAllowedHeaders(Arrays.asList(
+                "Accept",
+                "Content-Type",
+                "Cache-Control",
+                "DNT",
+                "Referer",
+                "User-Agent",
+                "Origin",
+                "X-Requested-With",
+                "Authorization",
+                "sec-ch-ua",
+                "sec-ch-ua-mobile",
+                "sec-ch-ua-platform"
+        ));
+        // 設定允許的公開標頭
+        configuration.setExposedHeaders(Arrays.asList("Authorization"));
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
         return source;
