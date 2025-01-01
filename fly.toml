@@ -1,16 +1,12 @@
-# fly.toml app configuration file generated for shopping-site-backend-shy-rain-9869 on 2024-12-27T13:50:26+08:00
+# fly.toml app configuration file generated for shopping-site-backend on 2025-01-01T07:03:38Z
 #
 # See https://fly.io/docs/reference/configuration/ for information about how to use this file.
 #
 
 app = 'shopping-site-backend'
-primary_region = 'hkg'
+primary_region = 'sin'
 
 [build]
-
-[env]
-  SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNtc2hyb2JjbmZ5bWJ0YWZlaWNwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mjk2NTI2NTAsImV4cCI6MjA0NTIyODY1MH0.ZAhCnijE6pfewnFfQW9RNwfWvdP_TcO1OrLPv4o220s'
-  SUPABASE_URL = 'https://cmshrobcnfymbtafeicp.supabase.co'
 
 [http_service]
   internal_port = 8080
@@ -20,19 +16,8 @@ primary_region = 'hkg'
   min_machines_running = 0
   processes = ['app']
 
-[[services]]
-  protocol = 'tcp'
-  internal_port = 8080
-
-  [[services.ports]]
-    port = 80
-    handlers = ['http']
-
-  [[services.ports]]
-    port = 443
-    handlers = ['tls', 'http']
-
 [[vm]]
   memory = '1gb'
   cpu_kind = 'shared'
   cpus = 1
+  memory_mb = 1024
