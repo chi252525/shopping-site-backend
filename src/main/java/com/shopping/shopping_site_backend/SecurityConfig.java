@@ -2,6 +2,8 @@ package com.shopping.shopping_site_backend;
 
 import com.shopping.shopping_site_backend.infra.sys.spring.filter.CustomAuthenticationFilter;
 import jakarta.servlet.http.HttpServletRequest;
+
+import java.util.Arrays;
 import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -107,12 +109,10 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.addAllowedOrigin("http://localhost:9000");
-        configuration.addAllowedOrigin("https://shopping-site-front.vercel.app");
-        configuration.addAllowedOrigin("https://shopping-site-admin-front.vercel.app");
-        configuration.addAllowedMethod("*");
-        configuration.addAllowedHeader("*");
- 
+        configuration.setAllowedOrigins(Arrays.asList("http://localhost:9000","https://shopping-site-front.vercel.app","https://shopping-site-admin-front.vercel.app"));
+        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+        configuration.setAllowedHeaders(Arrays.asList("*"));
+
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
