@@ -4,7 +4,6 @@ import com.shopping.shopping_site_backend.infra.sys.spring.filter.CustomAuthenti
 import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.Arrays;
-import java.util.List;
 import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -23,7 +22,6 @@ import org.springframework.security.web.authentication.SimpleUrlAuthenticationFa
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-import org.springframework.web.filter.CorsFilter;
 
 @Configuration
 @EnableWebSecurity
@@ -54,8 +52,10 @@ public class SecurityConfig {
             return customizeAuthorizationRequest(authorizationRequest);
           }
         };
-    http.csrf(AbstractHttpConfigurer::disable)
-            .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+    // 啟用 CORS 配置
+
+    http.cors(cors -> cors.configurationSource(corsConfigurationSource()))
+        .csrf(AbstractHttpConfigurer::disable)
             .authorizeHttpRequests(
             authorize ->
                 authorize
@@ -122,6 +122,7 @@ public class SecurityConfig {
           "Authorization",
           "Cache-Control",
           "X-Requested-With",
+          "Access-Control-Allow-Origin",
           "Origin"
       ));
         // 設定允許的公開標頭
