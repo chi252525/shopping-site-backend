@@ -58,19 +58,9 @@ public class SecurityConfig {
         .csrf(AbstractHttpConfigurer::disable)
             .authorizeHttpRequests(
             authorize ->
-                authorize
-                    .requestMatchers(
-                        "/favicon.ico",
-                        "/api/oauth2/**",
-                        "/api/oauth2/callback",
-                        "/swagger-ui/**",
-                        "/swagger-ui/index.html",
-                        "/intranet/**",
-                        "/v3/api-docs/**",
-                        "/error")
-                    .permitAll() // 允許 login 頁面、OAuth2 路徑、Swagger UI 和 API 文件被無需驗證的方式訪問
+                authorize// 允許 login 頁面、OAuth2 路徑、Swagger UI 和 API 文件被無需驗證的方式訪問
                     .anyRequest()
-                    .authenticated() // 其他請求需要驗證
+                    .permitAll() // 其他請求需要驗證
             )
         .oauth2Login(
             oauth2 ->
