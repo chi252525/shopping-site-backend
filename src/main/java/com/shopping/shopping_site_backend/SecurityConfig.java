@@ -110,25 +110,28 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList("http://localhost:9000","https://localhost:9000","https://shopping-site-front.vercel.app","https://shopping-site-admin-front.vercel.app"));
+      configuration.setAllowedOriginPatterns(Arrays.asList(
+          "http://localhost:*",
+          "https://localhost:*",
+          "https://*.vercel.app"
+      ));
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
-        configuration.setAllowedHeaders(Arrays.asList(
-                "Accept",
-                "Content-Type",
-                "Cache-Control",
-                "DNT",
-                "Referer",
-                "User-Agent",
-                "Origin",
-                "X-Requested-With",
-                "Authorization",
-                "sec-ch-ua",
-                "sec-ch-ua-mobile",
-                "sec-ch-ua-platform"
-        ));
+      configuration.setAllowedHeaders(Arrays.asList(
+          "Accept",
+          "Content-Type",
+          "Authorization",
+          "Cache-Control",
+          "X-Requested-With",
+          "Origin"
+      ));
         // 設定允許的公開標頭
-        configuration.setExposedHeaders(List.of(
-            "Authorization,Access-Control-Allow-Origin,Cache-Control,Content-Type,application/json"));
+      configuration.setExposedHeaders(Arrays.asList(
+          "Authorization",
+          "Access-Control-Allow-Origin",
+          "Cache-Control",
+          "Content-Type",
+          "application/json"
+      ));
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
         return source;
