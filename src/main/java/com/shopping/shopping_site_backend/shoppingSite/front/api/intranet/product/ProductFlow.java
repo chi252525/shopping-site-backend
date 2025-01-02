@@ -22,6 +22,7 @@ public class ProductFlow {
   public Page<Product> query(
       Long merchantId,
       String name,
+      String baseSku,
       Double minPrice,
       Double maxPrice,
       Boolean inStock,
@@ -33,6 +34,10 @@ public class ProductFlow {
 
     if (merchantId != null) {
       spec = spec.and(hasMerchantId(merchantId));
+    }
+
+    if (baseSku != null) {
+      spec = spec.and(baseSkuContains(baseSku));
     }
     if (name != null && !name.isEmpty()) {
       spec = spec.and(nameContains(name));
@@ -61,6 +66,11 @@ public class ProductFlow {
   public static Specification<Product> nameContains(String name) {
     return (root, query, criteriaBuilder) ->
         criteriaBuilder.like(root.get("name"), "%" + name + "%");
+  }
+
+  public static Specification<Product> baseSkuContains(String baseSku) {
+    return (root, query, criteriaBuilder) ->
+        criteriaBuilder.like(root.get("baseSku"), "%" + baseSku + "%");
   }
 
   public static Specification<Product> priceBetween(Double minPrice, Double maxPrice) {

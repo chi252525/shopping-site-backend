@@ -49,9 +49,4 @@ public class ProductRequest {
   @Schema(description = "結束販售時間")
   private LocalDateTime endTime;
 
-  @Schema(description = "頁碼")
-  private int page;
-
-  @Schema(description = "個數")
-  private int size;
 }

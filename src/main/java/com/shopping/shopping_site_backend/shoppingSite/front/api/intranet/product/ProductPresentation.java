@@ -21,6 +21,7 @@ public class ProductPresentation {
         productFlow.query(
             request.getMerchantId(),
             request.getName(),
+            request.getBaseSku(),
             request.getMinPrice(),
             request.getMaxPrice(),
             request.getInStock(),
