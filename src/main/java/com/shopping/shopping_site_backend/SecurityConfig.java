@@ -4,6 +4,7 @@ import com.shopping.shopping_site_backend.infra.sys.spring.filter.CustomAuthenti
 import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -126,7 +127,8 @@ public class SecurityConfig {
                 "sec-ch-ua-platform"
         ));
         // 設定允許的公開標頭
-        configuration.setExposedHeaders(Arrays.asList("Authorization"));
+        configuration.setExposedHeaders(List.of(
+            "Authorization,Access-Control-Allow-Origin,Cache-Control,Content-Type,application/json"));
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
         return source;
