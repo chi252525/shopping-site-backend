@@ -4,7 +4,6 @@ import com.shopping.shopping_site_backend.infra.sys.spring.filter.CustomAuthenti
 import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.Arrays;
-import java.util.List;
 import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -29,57 +28,67 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 public class SecurityConfig {
   @Autowired private ClientRegistrationRepository clientRegistrationRepository;
 
-//  @Bean
-//  public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-//    DefaultOAuth2AuthorizationRequestResolver defaultAuthorizationRequestResolver =
-//        new DefaultOAuth2AuthorizationRequestResolver(
-//            clientRegistrationRepository, "/oauth2/authorization");
-//
-//    // 定義自定義的範圍
-//    OAuth2AuthorizationRequestResolver customAuthorizationRequestResolver =
-//        new OAuth2AuthorizationRequestResolver() {
-//          @Override
-//          public OAuth2AuthorizationRequest resolve(HttpServletRequest request) {
-//            OAuth2AuthorizationRequest authorizationRequest =
-//                defaultAuthorizationRequestResolver.resolve(request);
-//            return customizeAuthorizationRequest(authorizationRequest);
-//          }
-//
-//          @Override
-//          public OAuth2AuthorizationRequest resolve(
-//              HttpServletRequest request, String clientRegistrationId) {
-//            OAuth2AuthorizationRequest authorizationRequest =
-//                defaultAuthorizationRequestResolver.resolve(request, clientRegistrationId);
-//            return customizeAuthorizationRequest(authorizationRequest);
-//          }
-//        };
-//    // 啟用 CORS 配置
-//
-//    http.cors(cors -> cors.configurationSource(corsConfigurationSource()))
-//        .csrf(AbstractHttpConfigurer::disable)
-//            .authorizeHttpRequests(
-//            authorize ->
-//                authorize// 允許 login 頁面、OAuth2 路徑、Swagger UI 和 API 文件被無需驗證的方式訪問
-//                    .anyRequest()
-//                    .permitAll() // 其他請求需要驗證
-//            )
-//        .oauth2Login(
-//            oauth2 ->
-//                oauth2
-//                    .loginPage("/oauth2/authorization/google")
-//                    .authorizationEndpoint(
-//                        authorizationEndpoint ->
-//                            authorizationEndpoint.authorizationRequestResolver(
-//                                customAuthorizationRequestResolver))
-//                    //                .successHandler(customAuthenticationSuccessHandler()) //
-//                    // 自訂成功處理器
-//                    .failureHandler(
-//                        new SimpleUrlAuthenticationFailureHandler("/login?error=true")));
-//    //        .addFilterBefore(customAuthenticationFilter(),
-//    // UsernamePasswordAuthenticationFilter.class); // 加入自訂的驗證過濾器
-//
-//    return http.build();
-//  }
+  @Bean
+  public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    DefaultOAuth2AuthorizationRequestResolver defaultAuthorizationRequestResolver =
+        new DefaultOAuth2AuthorizationRequestResolver(
+            clientRegistrationRepository, "/oauth2/authorization");
+
+    // 定義自定義的範圍
+    OAuth2AuthorizationRequestResolver customAuthorizationRequestResolver =
+        new OAuth2AuthorizationRequestResolver() {
+          @Override
+          public OAuth2AuthorizationRequest resolve(HttpServletRequest request) {
+            OAuth2AuthorizationRequest authorizationRequest =
+                defaultAuthorizationRequestResolver.resolve(request);
+            return customizeAuthorizationRequest(authorizationRequest);
+          }
+
+          @Override
+          public OAuth2AuthorizationRequest resolve(
+              HttpServletRequest request, String clientRegistrationId) {
+            OAuth2AuthorizationRequest authorizationRequest =
+                defaultAuthorizationRequestResolver.resolve(request, clientRegistrationId);
+            return customizeAuthorizationRequest(authorizationRequest);
+          }
+        };
+    // 啟用 CORS 配置
+
+    http.cors(cors -> cors.configurationSource(corsConfigurationSource()))
+        .csrf(AbstractHttpConfigurer::disable)
+            .authorizeHttpRequests(
+            authorize ->
+                authorize
+                    .requestMatchers(
+                        "/favicon.ico",
+                        "/api/oauth2/**",
+                        "/api/oauth2/callback",
+                        "/swagger-ui/**",
+                        "/swagger-ui/index.html",
+                        "/intranet/**",
+                        "/v3/api-docs/**",
+                        "/error")
+                    .permitAll() // 允許 login 頁面、OAuth2 路徑、Swagger UI 和 API 文件被無需驗證的方式訪問
+                    .anyRequest()
+                    .authenticated() // 其他請求需要驗證
+            )
+        .oauth2Login(
+            oauth2 ->
+                oauth2
+                    .loginPage("/oauth2/authorization/google")
+                    .authorizationEndpoint(
+                        authorizationEndpoint ->
+                            authorizationEndpoint.authorizationRequestResolver(
+                                customAuthorizationRequestResolver))
+                    //                .successHandler(customAuthenticationSuccessHandler()) //
+                    // 自訂成功處理器
+                    .failureHandler(
+                        new SimpleUrlAuthenticationFailureHandler("/login?error=true")));
+    //        .addFilterBefore(customAuthenticationFilter(),
+    // UsernamePasswordAuthenticationFilter.class); // 加入自訂的驗證過濾器
+
+    return http.build();
+  }
 
   private OAuth2AuthorizationRequest customizeAuthorizationRequest(
       OAuth2AuthorizationRequest authorizationRequest) {
@@ -98,36 +107,37 @@ public class SecurityConfig {
   public CustomAuthenticationFilter customAuthenticationFilter() {
     return new CustomAuthenticationFilter();
   }
-  // Define CORS configuration
-  @Bean
-  public UrlBasedCorsConfigurationSource corsConfigurationSource() {
-    CorsConfiguration configuration = new CorsConfiguration();
-    configuration.setAllowedOrigins(List.of(
-        "http://localhost:*", "https://localhost:*", "https://*.vercel.app"
-    ));
-    configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
-    configuration.setAllowedHeaders(List.of("*"));
-    configuration.setAllowCredentials(true);
-    UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-    source.registerCorsConfiguration("/**", configuration);
-    return source;
-  }
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+      configuration.setAllowedOriginPatterns(Arrays.asList(
+          "http://localhost:*",
+          "https://localhost:*",
+          "https://*.vercel.app"
+      ));
+        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+      configuration.setAllowedHeaders(Arrays.asList(
+          "Accept",
+          "Content-Type",
+          "Authorization",
+          "Cache-Control",
+          "X-Requested-With",
+          "Access-Control-Allow-Origin",
+          "Origin"
+      ));
+        // 設定允許的公開標頭
+      configuration.setExposedHeaders(Arrays.asList(
+          "Authorization",
+          "Access-Control-Allow-Origin",
+          "Cache-Control",
+          "Content-Type",
+          "application/json"
+      ));
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+        return source;
+    }
 
-  // Security configuration using SecurityFilterChain
-  @Bean
-  public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-    http
-        .cors(cors -> cors.configurationSource(corsConfigurationSource())) // Set CORS configuration
-        .csrf(AbstractHttpConfigurer::disable) // Disable CSRF protection
-        .authorizeHttpRequests(authorize ->
-            authorize
-                .requestMatchers("/login", "/oauth2/authorization/google", "/swagger-ui/**", "/v3/api-docs/**") // Allow public access to login, OAuth2, Swagger UI, and API docs
-                .permitAll() // No authentication required for these paths
-                .anyRequest() // All other requests require authentication
-                .authenticated()
-        );
-    return http.build();
-  }
   //  @Bean
   //  public AuthenticationSuccessHandler customAuthenticationSuccessHandler() {
   //    return (request, response, authentication) -> {
