@@ -20,6 +20,12 @@ public class ProductRequest {
   @Size(max = 50, message = "名稱不能超過 50 字")
   private String baseSku;
 
+  @Schema(description = "第一層分類Id", example = "1")
+  private Long firstCategory;
+
+  @Schema(description = "第二層分類Id", example = "1")
+  private Long secondCategory;
+
   @Schema(description = "最小價格", example = "100")
   @Min(value = 0, message = "價格不能為負")
   private Double minPrice;
@@ -42,6 +48,9 @@ public class ProductRequest {
 
   @Schema(description = "是否有庫存", example = "true")
   private Boolean inStock;
+
+  @Schema(description = "是否有顯示在前台", example = "true")
+  private Boolean isShow;
 
   @Schema(description = "開始販售時間")
   private LocalDateTime startTime;

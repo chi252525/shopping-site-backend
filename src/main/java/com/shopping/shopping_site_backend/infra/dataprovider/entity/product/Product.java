@@ -55,6 +55,9 @@ public class Product extends BaseEntity {
   @Column(name = "in_stock", nullable = false)
   private Boolean inStock;
 
+  @Column(name = "is_show", nullable = false)
+  private Boolean isShow;
+
   @Column(name = "available_start_time")
   private LocalDateTime availableStartTime;
 

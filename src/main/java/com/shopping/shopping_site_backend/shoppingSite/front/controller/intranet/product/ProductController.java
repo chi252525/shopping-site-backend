@@ -65,7 +65,7 @@ public class ProductController {
   @GetMapping("/list")
   public ResponseEntity<Page<ProductResponse>> getAllProducts(
       ProductRequest request,
-      @PageableDefault(size = 10, sort = "name", direction = Sort.Direction.ASC)
+      @PageableDefault(sort = "name", direction = Sort.Direction.ASC)
           Pageable pageable) {
     Page<ProductResponse> products = productPresentation.query(request, pageable);
     return new ResponseEntity<>(products, HttpStatus.OK);
