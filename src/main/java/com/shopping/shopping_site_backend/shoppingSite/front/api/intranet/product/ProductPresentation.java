@@ -32,14 +32,24 @@ public class ProductPresentation {
     // 將結果轉換為 Response DTO
     return products.map(this::toResponse);
   }
-
+  
+  //TODO Refactor
   private ProductResponse toResponse(Product product) {
     ProductResponse response = new ProductResponse();
     response.setId(product.getId());
     response.setName(product.getName());
+    response.setBaseSku(product.getBaseSku());
     response.setUnitPrice(product.getUnitPrice());
-    response.setDiscountPrice(product.getDiscountPrice());
+    response.setSalePrice(product.getSalePrice());
     response.setInStock(product.getInStock());
+    response.setIsShow(product.getIsShow());
+    response.setDiscountPrice(product.getDiscountPrice());
+    response.setStartTime(product.getAvailableStartTime());
+    response.setEndTime(product.getAvailableEndTime());
+    response.setFirstCategory(product.getFirstCategory());
+    response.setSecondCategory(product.getSecondCategory());
+    response.setVersionId(product.getVersionId());
+    response.setMerchantId(product.getMerchant().getId());
     return response;
   }
 
