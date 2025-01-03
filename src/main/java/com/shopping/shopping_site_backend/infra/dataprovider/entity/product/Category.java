@@ -32,13 +32,6 @@ public class Category extends BaseEntity {
   @Column(name = "name", nullable = false)
   private String name; // 分类名称
 
-  @ManyToOne
-  @JoinColumn(name = "product_id", nullable = false)
-  private Product product; // 关联的产品
-  // 关联的产品 ID
-
-  @ManyToOne
-  @MapsId
-  @JoinColumn(name = "id")
-  private Category parentCategory; // 关联的父级分类
+  @Column(name = "level", nullable = false)
+  private Long level;
 }
