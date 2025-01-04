@@ -39,10 +39,10 @@ public class ProductResponse {
   private LocalDateTime endTime;
 
   @Schema(description = "第一層分類")
-  private Category firstCategory;
+  private String firstCategory;
 
   @Schema(description = "第二層分類")
-  private Category secondCategory;
+  private String secondCategory;
 
   @Schema(description = "商家 ID")
   private Long merchantId;

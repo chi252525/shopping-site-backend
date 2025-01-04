@@ -46,8 +46,8 @@ public class ProductPresentation {
     response.setDiscountPrice(product.getDiscountPrice());
     response.setStartTime(product.getAvailableStartTime());
     response.setEndTime(product.getAvailableEndTime());
-    response.setFirstCategory(product.getFirstCategory());
-    response.setSecondCategory(product.getSecondCategory());
+    response.setFirstCategory(product.getFirstCategory().getName());
+    response.setSecondCategory(product.getSecondCategory().getName());
     response.setVersionId(product.getVersionId());
     response.setMerchantId(product.getMerchant().getId());
     return response;
