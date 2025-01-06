@@ -34,7 +34,7 @@ public class CategoryPresentation {
 
   // 查詢所有分類（分頁）
   public List<CategoryResponse> query() {
-    List<Category> categories = categoryRepository.findAll();
+    List<Category> categories = categoryRepository.findByEnabledTrue();
     return categories.stream().map(this::toCategoryResponse).toList();
   }
 
