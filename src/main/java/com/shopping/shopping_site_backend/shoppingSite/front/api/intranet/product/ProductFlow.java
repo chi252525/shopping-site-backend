@@ -89,6 +89,7 @@ public class ProductFlow {
   public void deleteByProductId(Long id) {
     Optional<Product> productOptional = productRepository.findById(id);
     if (!productOptional.isPresent()) {
+      // TODO throw exception 404
       throw new RuntimeException();
     }
     Product product = productOptional.get();
@@ -98,6 +99,7 @@ public class ProductFlow {
   public Product getProductById(Long id) {
     Optional<Product> productOptional = productRepository.findById(id);
     if (!productOptional.isPresent()) {
+      // TODO throw exception 404
       throw new RuntimeException();
     }
     return productOptional.get();

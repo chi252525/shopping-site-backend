@@ -20,11 +20,11 @@ public class ProductRequest {
   @Size(max = 50, message = "名稱不能超過 50 字")
   private String baseSku;
 
-  @Schema(description = "第一層分類Id", example = "1")
-  private Long firstCategory;
+  @Schema(description = "第一層分類")
+  private CategoryRequest firstCategory;
 
-  @Schema(description = "第二層分類Id", example = "1")
-  private Long secondCategory;
+  @Schema(description = "第二層分類")
+  private CategoryRequest secondCategory;
 
   @Schema(description = "最小價格", example = "100")
   @Min(value = 0, message = "價格不能為負")
