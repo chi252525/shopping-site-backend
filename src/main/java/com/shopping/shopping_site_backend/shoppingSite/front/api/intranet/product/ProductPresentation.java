@@ -1,6 +1,7 @@
 package com.shopping.shopping_site_backend.shoppingSite.front.api.intranet.product;
 
 import com.shopping.shopping_site_backend.infra.dataprovider.entity.product.Product;
+import com.shopping.shopping_site_backend.shoppingSite.front.controller.intranet.product.model.CategoryResponse;
 import com.shopping.shopping_site_backend.shoppingSite.front.controller.intranet.product.model.ProductRequest;
 import com.shopping.shopping_site_backend.shoppingSite.front.controller.intranet.product.model.ProductResponse;
 import jakarta.validation.Valid;
@@ -32,8 +33,8 @@ public class ProductPresentation {
     // 將結果轉換為 Response DTO
     return products.map(this::toResponse);
   }
-  
-  //TODO Refactor
+
+  // TODO Refactor
   private ProductResponse toResponse(Product product) {
     ProductResponse response = new ProductResponse();
     response.setId(product.getId());
@@ -46,8 +47,13 @@ public class ProductPresentation {
     response.setDiscountPrice(product.getDiscountPrice());
     response.setStartTime(product.getAvailableStartTime());
     response.setEndTime(product.getAvailableEndTime());
-    response.setFirstCategory(product.getFirstCategory().getName());
-    response.setSecondCategory(product.getSecondCategory().getName());
+
+    response.setFirstCategory(
+        new CategoryResponse(
+            product.getFirstCategory().getName(), product.getFirstCategory().getId().toString()));
+    response.setSecondCategory(
+        new CategoryResponse(
+            product.getSecondCategory().getName(), product.getSecondCategory().getId().toString()));
     response.setVersionId(product.getVersionId());
     response.setMerchantId(product.getMerchant().getId());
     return response;
