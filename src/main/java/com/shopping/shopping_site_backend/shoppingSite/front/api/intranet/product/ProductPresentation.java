@@ -54,6 +54,8 @@ public class ProductPresentation {
     response.setSecondCategory(
         new CategoryResponse(
             product.getSecondCategory().getName(), product.getSecondCategory().getId().toString()));
+    response.setThirdCategory(new CategoryResponse(
+        product.getThirdCategory().getName(), product.getThirdCategory().getId().toString()));
     response.setVersionId(product.getVersionId());
     response.setMerchantId(product.getMerchant().getId());
     return response;

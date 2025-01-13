@@ -44,6 +44,9 @@ public class ProductResponse {
   @Schema(description = "第二層分類")
   private CategoryResponse secondCategory;
 
+  @Schema(description = "第三層分類")
+  private CategoryResponse thirdCategory;
+
   @Schema(description = "商家 ID")
   private Long merchantId;
 

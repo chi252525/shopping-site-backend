@@ -1,5 +1,6 @@
 package com.shopping.shopping_site_backend.shoppingSite.front.controller.intranet.product.model;
 
+import com.shopping.shopping_site_backend.shoppingSite.front.controller.intranet.category.model.CategoryRequest;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.Size;
@@ -21,10 +22,13 @@ public class ProductRequest {
   private String baseSku;
 
   @Schema(description = "第一層分類")
-  private CategoryRequest firstCategory;
+  private Long firstCategory;
 
   @Schema(description = "第二層分類")
-  private CategoryRequest secondCategory;
+  private Long secondCategory;
+
+  @Schema(description = "第二層分類")
+  private Long thirdCategory;
 
   @Schema(description = "最小價格", example = "100")
   @Min(value = 0, message = "價格不能為負")

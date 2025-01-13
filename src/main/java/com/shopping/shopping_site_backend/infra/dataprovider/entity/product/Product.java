@@ -76,6 +76,10 @@ public class Product extends BaseEntity {
   @JoinColumn(name = "second_category_id", nullable = false)
   private Category secondCategory;
 
+  @ManyToOne
+  @JoinColumn(name = "third_category_id", nullable = false)
+  private Category thirdCategory;
+
   @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
   @ToString.Exclude // 防止循环引用
   private List<Image> images = new ArrayList<>(); // 关联的图片列表
