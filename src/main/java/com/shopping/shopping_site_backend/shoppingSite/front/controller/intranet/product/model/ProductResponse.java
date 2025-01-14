@@ -52,4 +52,20 @@ public class ProductResponse {
 
   @Schema(description = "版本號")
   private String versionId;
+
+  @Schema(description = "商品描述")
+  private String description;
+
+  @Schema(description = "預估總利潤", example = "899.99")
+  private Double estimatedTotalProfit;
+
+  @Schema(description = "是否款項結清", example = "true")
+  private Boolean isSettled;
+
+  @Schema(description = "是否舊貨", example = "true")
+  private Boolean isOld;
+
+  @Schema(description = "廠商 ID")
+  private WholesalerResponse wholesaler;
+
 }

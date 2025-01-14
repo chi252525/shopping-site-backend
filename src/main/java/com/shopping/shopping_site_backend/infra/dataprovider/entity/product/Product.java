@@ -2,6 +2,7 @@ package com.shopping.shopping_site_backend.infra.dataprovider.entity.product;
 
 import com.shopping.shopping_site_backend.infra.dataprovider.entity.BaseEntity;
 import com.shopping.shopping_site_backend.infra.dataprovider.entity.merchant.Merchant;
+import com.shopping.shopping_site_backend.infra.dataprovider.entity.merchant.Wholesaler;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -64,6 +65,15 @@ public class Product extends BaseEntity {
   @Column(name = "available_end_time")
   private LocalDateTime availableEndTime;
 
+  @Column(name = "description")
+  private String description;
+
+  @Column(name = "is_settled")
+  private Boolean isSettled;
+
+  @Column(name = "is_old")
+  private Boolean isOld;
+
   @ManyToOne
   @JoinColumn(name = "merchant_id", nullable = false)
   private Merchant merchant;
@@ -83,5 +93,13 @@ public class Product extends BaseEntity {
   @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
   @ToString.Exclude // 防止循环引用
   private List<Image> images = new ArrayList<>(); // 关联的图片列表
+
+  @Column(name = "estimated_total_profit")
+  private Double estimatedTotalProfit;
+
+  @ManyToOne
+  @JoinColumn(name = "wholesaler_id")
+  private Wholesaler wholesaler;
+
 
 }

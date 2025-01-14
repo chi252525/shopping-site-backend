@@ -4,6 +4,7 @@ import com.shopping.shopping_site_backend.infra.dataprovider.entity.product.Prod
 import com.shopping.shopping_site_backend.shoppingSite.front.controller.intranet.product.model.CategoryResponse;
 import com.shopping.shopping_site_backend.shoppingSite.front.controller.intranet.product.model.ProductRequest;
 import com.shopping.shopping_site_backend.shoppingSite.front.controller.intranet.product.model.ProductResponse;
+import com.shopping.shopping_site_backend.shoppingSite.front.controller.intranet.product.model.WholesalerResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -58,6 +59,11 @@ public class ProductPresentation {
         product.getThirdCategory().getName(), product.getThirdCategory().getId().toString()));
     response.setVersionId(product.getVersionId());
     response.setMerchantId(product.getMerchant().getId());
+    response.setDescription(product.getDescription());
+    response.setEstimatedTotalProfit(product.getEstimatedTotalProfit());
+    response.setIsSettled(product.getIsSettled());
+    response.setIsOld(product.getIsOld());
+    response.setWholesaler(new WholesalerResponse(product.getWholesaler().getName(),product.getWholesaler().getId().toString()));
     return response;
   }
 
