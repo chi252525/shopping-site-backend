@@ -97,6 +97,12 @@ public class Product extends BaseEntity {
   @Column(name = "estimated_total_profit")
   private Double estimatedTotalProfit;
 
+  @Column(name = "total_cost")
+  private Double totalCost;
+
+  @Column(name = "estimated_profit")
+  private Double estimatedProfit;
+
   @ManyToOne
   @JoinColumn(name = "wholesaler_id")
   private Wholesaler wholesaler;

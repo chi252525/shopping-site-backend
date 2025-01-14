@@ -64,6 +64,8 @@ public class ProductPresentation {
     response.setIsSettled(product.getIsSettled());
     response.setIsOld(product.getIsOld());
     response.setWholesaler(new WholesalerResponse(product.getWholesaler().getName(),product.getWholesaler().getId().toString()));
+    response.setEstimatedProfit(product.getEstimatedProfit());
+    response.setTotalCost(product.getTotalCost());
     return response;
   }
 

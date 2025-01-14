@@ -25,5 +25,6 @@
 | 19 | description               | STRING   |    |     | NO   | 商品描述                                            |
 | 20 | return_quantity_on_cancel | BOOLEAN  |    |     | NO   | 庫存返還                                            |
 | 21 | alert_threshold           | INTEGER  |    |     | NO   | 庫存警示數                                           |
-
+| 22 | total_cost             | INTEGER   |    |     | NO   | 商品總成本                                              |
+| 23 | estimated_profit             | INTEGER   |    |     | NO   | 單件利潤                                               |
 

@@ -59,6 +59,12 @@ public class ProductResponse {
   @Schema(description = "預估總利潤", example = "899.99")
   private Double estimatedTotalProfit;
 
+  @Schema(description = "預估單件利潤", example = "899.99")
+  private Double estimatedProfit;
+
+  @Schema(description = "商品總成本", example = "899.99")
+  private Double totalCost;
+
   @Schema(description = "是否款項結清", example = "true")
   private Boolean isSettled;
 
