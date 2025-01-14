@@ -50,16 +50,16 @@ public class ProductRequest {
   @Min(value = 0, message = "價格不能為負")
   private Double discountPrice;
 
-  @Schema(description = "是否有庫存", example = "true")
+  @Schema(description = "是否已到貨", example = "true")
   private Boolean inStock;
 
   @Schema(description = "是否有顯示在前台", example = "true")
   private Boolean isShow;
 
-  @Schema(description = "開始販售時間")
+  @Schema(description = "上架時間")
   private LocalDateTime startTime;
 
-  @Schema(description = "結束販售時間")
+  @Schema(description = "下架時間")
   private LocalDateTime endTime;
 
 }
