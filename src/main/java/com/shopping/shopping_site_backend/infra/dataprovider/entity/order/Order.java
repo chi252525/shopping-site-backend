@@ -37,13 +37,13 @@ public class Order extends BaseEntity {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id; // 自动递增的 ID
 
-  @Column(name = "indicationOrderNumber", nullable = false)
+  @Column(name = "indication_order_number", nullable = false)
   private String indicationOrderNumber;
 
-  @Column(name = "orderDate", nullable = false)
+  @Column(name = "order_date", nullable = false)
   private LocalDateTime orderDate;
 
-  @Column(name = "paymentDate")
+  @Column(name = "payment_date")
   private LocalDateTime paymentDate;
 
   @Enumerated(EnumType.STRING)
