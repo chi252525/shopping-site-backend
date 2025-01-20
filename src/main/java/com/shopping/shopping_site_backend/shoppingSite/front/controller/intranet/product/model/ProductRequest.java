@@ -2,6 +2,7 @@ package com.shopping.shopping_site_backend.shoppingSite.front.controller.intrane
 
 import com.shopping.shopping_site_backend.shoppingSite.front.controller.intranet.category.model.CategoryRequest;
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.persistence.Column;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.Size;
 import java.time.LocalDateTime;
@@ -61,5 +62,11 @@ public class ProductRequest {
 
   @Schema(description = "下架時間")
   private LocalDateTime endTime;
+
+  @Schema(name = "是否要庫存返還")
+  private Boolean returnQuantityOnCancel;
+
+  @Schema(name = "庫存警示數")
+  private Integer alertThreshold;
 
 }

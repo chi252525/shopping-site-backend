@@ -1,7 +1,5 @@
 package com.shopping.shopping_site_backend.infra.dataprovider.entity.order;
 
-import com.shopping.shopping_site_backend.infra.dataprovider.entity.BaseEntity;
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -9,7 +7,11 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 import org.hibernate.annotations.DynamicUpdate;
 
 @Getter
@@ -19,8 +21,9 @@ import org.hibernate.annotations.DynamicUpdate;
 @NoArgsConstructor
 @DynamicUpdate
 @Entity
-@Table(name = "ec_order_item")
-public class OrderItem extends BaseEntity {
+@Table(name = "ec_refund_record")
+public class RefundRecord {
+
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
@@ -29,15 +32,5 @@ public class OrderItem extends BaseEntity {
   @JoinColumn(name = "order_id", nullable = false)
   private Order order;
 
-  @Column(name = "sku", nullable = false)
-  private String sku;
 
-  @Column(name = "discount_price", nullable = false)
-  private double discountPrice;
-
-  @Column(name = "quantity", nullable = false)
-  private int quantity;
-
-  @Column(name = "version_id")
-  private String versionId;
 }

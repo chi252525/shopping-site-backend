@@ -6,6 +6,7 @@ import com.shopping.shopping_site_backend.infra.constant.enumconstant.ShippingSt
 import com.shopping.shopping_site_backend.infra.constant.enumconstant.ShippingType;
 import com.shopping.shopping_site_backend.infra.dataprovider.entity.BaseEntity;
 import com.shopping.shopping_site_backend.infra.dataprovider.entity.shopper.Shopper;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -15,10 +16,13 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import java.time.LocalDateTime;
+import java.util.List;
 import lombok.*;
 import org.hibernate.annotations.DynamicUpdate;
+import reactor.core.publisher.Sinks.Many;
 
 @Getter
 @Setter
@@ -100,4 +104,9 @@ public class Order extends BaseEntity {
   @ManyToOne
   @JoinColumn(name = "shopper_id", nullable = false)
   private Shopper shopper;
+
+  @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
+  private List<OrderItem> orderItems;
+
+
 }

@@ -107,5 +107,9 @@ public class Product extends BaseEntity {
   @JoinColumn(name = "wholesaler_id")
   private Wholesaler wholesaler;
 
+  @Column(name = "return_quantity_on_cancel")
+  private Boolean returnQuantityOnCancel;
 
+  @Column(name = "庫存警示數")
+  private Integer alertThreshold;
 }

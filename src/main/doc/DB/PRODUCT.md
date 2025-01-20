@@ -21,10 +21,10 @@
 | 15 | is_settled                | BOOLEAN  |    |     | NO   | 是否已结清                                           |
 | 16 | is_old                    | BOOLEAN  |    |     | NO   | 是否為舊貨                                           |
 | 17 | estimated_total_profit    | INTEGER  |    |     | NO   | 預估總利潤                                           |
-| 18 | whole_saler_id            | INTEGER  |    |     | NO   | 廠商ID FK  [CATEGORY](/src/main/doc/DB/CATEGORY)                                       |
+| 18 | whole_saler_id            | INTEGER  |    |     | NO   | 廠商ID FK  [CATEGORY](/src/main/doc/DB/CATEGORY)  |
 | 19 | description               | STRING   |    |     | NO   | 商品描述                                            |
-| 20 | return_quantity_on_cancel | BOOLEAN  |    |     | NO   | 庫存返還                                            |
+| 20 | return_quantity_on_cancel | BOOLEAN  |    |     | NO   | 是否要庫存返還                                         |
 | 21 | alert_threshold           | INTEGER  |    |     | NO   | 庫存警示數                                           |
-| 22 | total_cost             | INTEGER   |    |     | NO   | 商品總成本                                              |
-| 23 | estimated_profit             | INTEGER   |    |     | NO   | 單件利潤                                               |
+| 22 | total_cost             | INTEGER   |    |     | NO   | 商品總成本                                           |
+| 23 | estimated_profit             | INTEGER   |    |     | NO   | 單件利潤                                            |
 

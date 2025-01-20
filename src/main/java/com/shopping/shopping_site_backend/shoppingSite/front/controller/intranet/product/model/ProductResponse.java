@@ -71,6 +71,12 @@ public class ProductResponse {
   @Schema(description = "是否舊貨", example = "true")
   private Boolean isOld;
 
+  @Schema(name = "是否要庫存返還")
+  private Boolean returnQuantityOnCancel;
+
+  @Schema(name = "庫存警示數")
+  private Integer alertThreshold;
+
   @Schema(description = "廠商 ID")
   private WholesalerResponse wholesaler;
 
