@@ -110,6 +110,6 @@ public class Product extends BaseEntity {
   @Column(name = "return_quantity_on_cancel")
   private Boolean returnQuantityOnCancel;
 
-  @Column(name = "庫存警示數")
+  @Column(name = "alert_threshold")
   private Integer alertThreshold;
 }
