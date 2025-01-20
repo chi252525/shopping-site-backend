@@ -30,6 +30,10 @@ public class AuthController {
   @Value("${spring.security.oauth2.client.registration.google.redirect-uri}")
   private String redirectUri;
 
+  @Value("${project.front.uri}")
+  private String frontUri;
+
+
   private final GoogleService googleService;
 
   private final JwtService jwtService;
@@ -80,7 +84,7 @@ public class AuthController {
     } catch (Exception e) {
       logger.error("Error retrieving user info: {}", e.getMessage());
       RedirectView redirectView = new RedirectView();
-      redirectView.setUrl("http://localhost:9000/"); // 將 URL 設定為 Vue 應用的根路徑
+      redirectView.setUrl(frontUri); // 將 URL 設定為 Vue 應用的根路徑
       return redirectView;
     }
 
@@ -92,7 +96,7 @@ public class AuthController {
     response.put("message", "Login successful");
     response.put("token", token); // 返回 JWT 或 session ID
     RedirectView redirectView = new RedirectView();
-    redirectView.setUrl("http://localhost:9000/?token=" + token); // 將 URL 設定為 Vue 應用的根路徑
+    redirectView.setUrl(frontUri + "?token=" + token); // 將 URL 設定為 Vue 應用的根路徑
     return redirectView;
   }
 
