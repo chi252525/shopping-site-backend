@@ -20,38 +20,70 @@ public class ProductFlow {
   private final ProductRepository productRepository;
 
   public Page<Product> query(
-      Long merchantId,
-      String name,
-      String baseSku,
-      Double minPrice,
-      Double maxPrice,
-      Boolean inStock,
-      LocalDateTime startTime,
-      LocalDateTime endTime,
+          ProductRequest request,
       Pageable pageable) {
     // 構建查詢條件
     Specification<Product> spec = Specification.where(null);
 
-    if (merchantId != null) {
-      spec = spec.and(hasMerchantId(merchantId));
+    if (request.getMerchantId() != null) {
+      spec = spec.and(hasMerchantId(request.getMerchantId()));
+    }
+    if (request.getWholesalerId() != null) {
+      spec = spec.and(hasWholesalerId(request.getWholesalerId()));
+    }
+    if (request.getFirstCategory() != null) {
+      spec = spec.and(hasFirstCategoryId(request.getFirstCategory()));
+    }
+    if (request.getSecondCategory() != null) {
+      spec = spec.and(hasSecondCategoryId(request.getSecondCategory()));
+    }
+    if (request.getThirdCategory()!= null) {
+      spec = spec.and(hasThirdCategoryId(request.getThirdCategory()));
+    }
+    if (request.getBaseSku() != null) {
+      spec = spec.and(baseSkuContains(request.getBaseSku()));
+    }
+    if (request.getName()!= null && !request.getName().isEmpty()) {
+      spec = spec.and(nameContains(request.getName()));
+    }
+    if (request.getMaxPrice() != null && request.getMinPrice() != null) {
+      spec = spec.and(priceBetween(request.getMinPrice(), request.getMaxPrice()));
+    }
+    if (request.getInStock() != null) {
+      spec = spec.and(isInStock(request.getInStock()));
     }
 
-    if (baseSku != null) {
-      spec = spec.and(baseSkuContains(baseSku));
+    if (request.getIsShow() != null) {
+      spec = spec.and(isShow(request.getIsShow()));
     }
-    if (name != null && !name.isEmpty()) {
-      spec = spec.and(nameContains(name));
+
+    if (request.getIsSettled() != null) {
+      spec = spec.and(isSettled(request.getIsSettled()));
     }
-    if (minPrice != null && maxPrice != null) {
-      spec = spec.and(priceBetween(minPrice, maxPrice));
+
+    if (request.getIsOld() != null) {
+      spec = spec.and(isOld(request.getIsOld()));
     }
-    if (inStock != null) {
-      spec = spec.and(isInStock(inStock));
-    }
-    if (startTime != null && endTime != null) {
-      spec = spec.and(isAvailableBetween(startTime, endTime));
+
+    if (request.getStartTime() != null && request.getEndTime() != null) {
+      spec = spec.and(isAvailableBetween(request.getStartTime(), request.getEndTime() ));
     }
     return productRepository.findAll(spec, pageable);
+  }
+  private Specification<Product> hasThirdCategoryId(Long thirdCategory) {
+    return (root, query, criteriaBuilder) ->
+            criteriaBuilder.equal(root.get("thirdCategory").get("id"), thirdCategory);
+
+  }
+  private Specification<Product> hasSecondCategoryId(Long secondCategory) {
+    return (root, query, criteriaBuilder) ->
+            criteriaBuilder.equal(root.get("secondCategory").get("id"), secondCategory);
+
+  }
+
+  private Specification<Product> hasFirstCategoryId(Long firstCategoryId) {
+    return (root, query, criteriaBuilder) ->
+            criteriaBuilder.equal(root.get("firstCategory").get("id"), firstCategoryId);
   }
 
   public static Specification<Product> hasMerchantId(Long merchantId) {
@@ -59,10 +91,25 @@ public class ProductFlow {
         criteriaBuilder.equal(root.get("merchant").get("id"), merchantId);
   }
 
+  public static Specification<Product> hasWholesalerId(Long wholesalerId) {
+    return (root, query, criteriaBuilder) ->
+            criteriaBuilder.equal(root.get("wholesaler").get("id"), wholesalerId);
+  }
   public static Specification<Product> isInStock(Boolean inStock) {
     return (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get("inStock"), inStock);
   }
 
+  public static Specification<Product> isShow(Boolean isShow) {
+    return (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get("isShow"), isShow);
+  }
+
+  public static Specification<Product> isSettled(Boolean isSettled) {
+    return (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get("isSettled"), isSettled);
+  }
+
+  public static Specification<Product> isOld(Boolean isOld) {
+    return (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get("isOld"), isOld);
+  }
   public static Specification<Product> nameContains(String name) {
     return (root, query, criteriaBuilder) ->
         criteriaBuilder.like(root.get("name"), "%" + name + "%");

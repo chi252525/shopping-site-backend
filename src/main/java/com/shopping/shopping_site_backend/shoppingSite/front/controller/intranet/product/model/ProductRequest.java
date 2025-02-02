@@ -28,8 +28,11 @@ public class ProductRequest {
   @Schema(description = "第二層分類")
   private Long secondCategory;
 
-  @Schema(description = "第二層分類")
+  @Schema(description = "第三層分類")
   private Long thirdCategory;
+
+  @Schema(description = "批發商Id", example = "1")
+  private Long wholesalerId;
 
   @Schema(description = "最小價格", example = "100")
   @Min(value = 0, message = "價格不能為負")
@@ -56,6 +59,12 @@ public class ProductRequest {
 
   @Schema(description = "是否有顯示在前台", example = "true")
   private Boolean isShow;
+
+  @Schema(description = "是否已結清", example = "true")
+  private Boolean isSettled;
+
+  @Schema(description = "是否舊貨", example = "true")
+  private Boolean isOld;
 
   @Schema(description = "上架時間")
   private LocalDateTime startTime;

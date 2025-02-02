@@ -21,14 +21,7 @@ public class ProductPresentation {
   public Page<ProductResponse> query(ProductRequest request, Pageable pageable) {
     Page<Product> products =
         productFlow.query(
-            request.getMerchantId(),
-            request.getName(),
-            request.getBaseSku(),
-            request.getMinPrice(),
-            request.getMaxPrice(),
-            request.getInStock(),
-            request.getStartTime(),
-            request.getEndTime(),
+            request,
             pageable);
 
     // 將結果轉換為 Response DTO
