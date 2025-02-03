@@ -8,6 +8,7 @@ import com.shopping.shopping_site_backend.shoppingSite.front.controller.intranet
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -27,21 +28,10 @@ public class ProductPresentation {
     // 將結果轉換為 Response DTO
     return products.map(this::toResponse);
   }
-
-  // TODO Refactor
+  
   private ProductResponse toResponse(Product product) {
     ProductResponse response = new ProductResponse();
-    response.setId(product.getId());
-    response.setName(product.getName());
-    response.setBaseSku(product.getBaseSku());
-    response.setUnitPrice(product.getUnitPrice());
-    response.setSalePrice(product.getSalePrice());
-    response.setInStock(product.getInStock());
-    response.setIsShow(product.getIsShow());
-    response.setDiscountPrice(product.getDiscountPrice());
-    response.setStartTime(product.getAvailableStartTime());
-    response.setEndTime(product.getAvailableEndTime());
-
+    BeanUtils.copyProperties(product, response);
     response.setFirstCategory(
         new CategoryResponse(
             product.getFirstCategory().getName(), product.getFirstCategory().getId().toString()));
@@ -50,15 +40,8 @@ public class ProductPresentation {
             product.getSecondCategory().getName(), product.getSecondCategory().getId().toString()));
     response.setThirdCategory(new CategoryResponse(
         product.getThirdCategory().getName(), product.getThirdCategory().getId().toString()));
-    response.setVersionId(product.getVersionId());
     response.setMerchantId(product.getMerchant().getId());
-    response.setDescription(product.getDescription());
-    response.setEstimatedTotalProfit(product.getEstimatedTotalProfit());
-    response.setIsSettled(product.getIsSettled());
-    response.setIsOld(product.getIsOld());
     response.setWholesaler(new WholesalerResponse(product.getWholesaler().getName(),product.getWholesaler().getId().toString()));
-    response.setEstimatedProfit(product.getEstimatedProfit());
-    response.setTotalCost(product.getTotalCost());
     return response;
   }
 
