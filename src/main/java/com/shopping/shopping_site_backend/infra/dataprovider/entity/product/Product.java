@@ -2,7 +2,7 @@ package com.shopping.shopping_site_backend.infra.dataprovider.entity.product;
 
 import com.shopping.shopping_site_backend.infra.dataprovider.entity.BaseEntity;
 import com.shopping.shopping_site_backend.infra.dataprovider.entity.merchant.Merchant;
-import com.shopping.shopping_site_backend.infra.dataprovider.entity.merchant.Wholesaler;
+import com.shopping.shopping_site_backend.infra.dataprovider.entity.wholesaler.Wholesaler;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

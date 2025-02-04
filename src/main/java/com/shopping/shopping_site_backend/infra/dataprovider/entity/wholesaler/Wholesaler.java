@@ -1,4 +1,4 @@
-package com.shopping.shopping_site_backend.infra.dataprovider.entity.merchant;
+package com.shopping.shopping_site_backend.infra.dataprovider.entity.wholesaler;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
