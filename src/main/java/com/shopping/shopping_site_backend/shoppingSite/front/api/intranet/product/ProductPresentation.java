@@ -32,6 +32,8 @@ public class ProductPresentation {
   private ProductResponse toResponse(Product product) {
     ProductResponse response = new ProductResponse();
     BeanUtils.copyProperties(product, response);
+    response.setStartTime(product.getAvailableStartTime());
+    response.setEndTime(product.getAvailableEndTime());
     response.setFirstCategory(
         new CategoryResponse(
             product.getFirstCategory().getName(), product.getFirstCategory().getId().toString()));
