@@ -13,13 +13,13 @@ import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequestMapping("/files")
-@CrossOrigin(origins = "http://localhost:8080") // 允許 Quasar 前端跨域
+@CrossOrigin(origins = "http://localhost:9000") // 允許 Quasar 前端跨域
 @RequiredArgsConstructor
 public class FileController {
 
   private final GoogleDriveService googleDriveService;
 
-  @PostMapping("/upload/{type}/{id}")
+  @PostMapping("/upload")
   public ResponseEntity<String> uploadFile(
       @RequestParam("file") MultipartFile file, OAuth2AuthenticationToken authentication) {
     try {

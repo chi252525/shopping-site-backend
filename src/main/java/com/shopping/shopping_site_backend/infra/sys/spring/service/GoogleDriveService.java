@@ -29,12 +29,8 @@ public class GoogleDriveService {
     HttpTransport httpTransport = GoogleNetHttpTransport.newTrustedTransport();
     JacksonFactory jsonFactory = JacksonFactory.getDefaultInstance();
 
-    return new Builder(httpTransport, jsonFactory, new HttpRequestInitializer() {
-      @Override
-      public void initialize(HttpRequest request) {
-        request.getHeaders().setAuthorization("Bearer " + accessToken);
-      }
-    }).setApplicationName(APPLICATION_NAME).build();
+    return new Builder(httpTransport, jsonFactory,
+        request -> request.getHeaders().setAuthorization("Bearer " + accessToken)).setApplicationName(APPLICATION_NAME).build();
   }
 
   public String uploadFile(MultipartFile file, OAuth2AuthenticationToken authentication) throws IOException, GeneralSecurityException {
