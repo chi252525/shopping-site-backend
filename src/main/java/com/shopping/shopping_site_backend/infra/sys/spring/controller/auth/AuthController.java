@@ -6,17 +6,18 @@ import com.shopping.shopping_site_backend.infra.sys.spring.service.JwtService;
 import java.net.URI;
 import java.util.HashMap;
 import java.util.Map;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
 import org.springframework.web.util.UriComponentsBuilder;
 
+@RequiredArgsConstructor
 @Slf4j
 @RestController
 @RequestMapping("/api")
@@ -33,19 +34,10 @@ public class AuthController {
   @Value("${project.front.uri}")
   private String frontUri;
 
-
   private final GoogleService googleService;
 
   private final JwtService jwtService;
   private static final Logger logger = LoggerFactory.getLogger(AuthController.class);
-
-  public AuthController(
-      GoogleService googleService,
-      AuthenticationManager authenticationManager,
-      JwtService jwtService) {
-    this.googleService = googleService;
-    this.jwtService = jwtService;
-  }
 
   @GetMapping("/oauth2/login")
   public ResponseEntity<?> login() {
@@ -85,6 +77,14 @@ public class AuthController {
       logger.error("Error retrieving user info: {}", e.getMessage());
       RedirectView redirectView = new RedirectView();
       redirectView.setUrl(frontUri); // 將 URL 設定為 Vue 應用的根路徑
+      return redirectView;
+    }
+
+    // 檢查DB 是否存在用戶資料
+    if (!googleService.isValidUser(user.getEmail())) {
+      logger.error("Error retrieving user info: {}", "用戶不存在");
+      RedirectView redirectView = new RedirectView();
+      redirectView.setUrl(frontUri);
       return redirectView;
     }
 

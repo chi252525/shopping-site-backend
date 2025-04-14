@@ -1,12 +1,12 @@
 package com.shopping.shopping_site_backend.infra.sys.spring.service;
 
 import com.shopping.shopping_site_backend.infra.dataprovider.entity.shopper.GoogleUser;
-import com.shopping.shopping_site_backend.infra.dataprovider.entity.shopper.Shopper;
-import com.shopping.shopping_site_backend.infra.sys.spring.repository.ShopperRepository;
+import com.shopping.shopping_site_backend.infra.sys.spring.repository.GoogleUserRepository;
 import java.util.Collections;
+import java.util.Optional;
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -16,6 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+@RequiredArgsConstructor
 @Service
 public class GoogleService {
   private static final Logger logger = LoggerFactory.getLogger(GoogleService.class);
@@ -29,13 +30,14 @@ public class GoogleService {
   @Value("${spring.security.oauth2.client.registration.google.redirect-uri}")
   private String redirectUri;
 
-  private final RestTemplate restTemplate;
-  private final ShopperRepository shopperRepository;
+  @Value("${spring.security.oauth2.client.provider.google.token-uri}")
+  private String tokenUri;
 
-  @Autowired
-  public GoogleService(RestTemplate restTemplate, ShopperRepository shopperRepository) {
-    this.restTemplate = restTemplate;
-    this.shopperRepository = shopperRepository;
+  private final RestTemplate restTemplate;
+  private final GoogleUserRepository googleUserRepository;
+
+  public boolean isValidUser(String email) {
+    return googleUserRepository.findFirstByEmail(email).isPresent();
   }
 
   public GoogleUser getUserInfo(String code) {
@@ -47,8 +49,6 @@ public class GoogleService {
   }
 
   private String exchangeCodeForToken(String code) {
-    String tokenUrl = "https://oauth2.googleapis.com/token";
-
     // Create the request body
     String requestBody =
         String.format(
@@ -62,7 +62,7 @@ public class GoogleService {
     // Send POST request
     HttpEntity<String> entity = new HttpEntity<>(requestBody, headers);
     ResponseEntity<TokenResponse> response =
-        restTemplate.postForEntity(tokenUrl, entity, TokenResponse.class);
+        restTemplate.postForEntity(tokenUri, entity, TokenResponse.class);
 
     // Check for successful response and extract token
     if (response.getStatusCode().is2xxSuccessful() && response.getBody() != null) {
@@ -105,10 +105,9 @@ public class GoogleService {
   }
 
   public GoogleUser getUserByEmail(String email) {
-    Shopper user = shopperRepository.findByEmail(email); // 假設有這個方法
-
-    if (user != null) {
-      return new GoogleUser(user.getId(), user.getName(), user.getEmail());
+    Optional<GoogleUser> user = googleUserRepository.findFirstByEmail(email);
+    if (user.isPresent()) {
+      return user.get();
     } else {
       // 根據需要可以選擇拋出異常或返回 null
       throw new RuntimeException("User not found");

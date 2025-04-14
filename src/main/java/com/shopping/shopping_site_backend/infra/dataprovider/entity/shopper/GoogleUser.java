@@ -1,39 +1,29 @@
 package com.shopping.shopping_site_backend.infra.dataprovider.entity.shopper;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.*;
+import com.shopping.shopping_site_backend.infra.dataprovider.entity.BaseEntity;
+import jakarta.persistence.Entity;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+import org.hibernate.annotations.DynamicUpdate;
 
-@Data
-public class GoogleUser {
+@Getter
+@Setter
+@ToString
+@AllArgsConstructor
+@NoArgsConstructor
+@DynamicUpdate
+@Entity
+public class GoogleUser extends BaseEntity {
   @JsonProperty("id")
-  private String id;
+  private Long id;
 
   @JsonProperty("email")
   private String email;
 
-  @JsonProperty("verified_email")
-  private boolean verifiedEmail;
-
   @JsonProperty("name")
   private String name;
-
-  @JsonProperty("given_name")
-  private String givenName;
-
-  @JsonProperty("family_name")
-  private String familyName;
-
-  @JsonProperty("picture")
-  private String picture;
-
-  @JsonProperty("locale")
-  private String locale;
-  // No-argument constructor
-  public GoogleUser() {}
-
-  public GoogleUser(Long id, String name, String email) {
-    this.id = id.toString();
-    this.name = name;
-    this.email = email;
-  }
 }
